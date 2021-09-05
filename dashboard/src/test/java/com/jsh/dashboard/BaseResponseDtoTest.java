@@ -17,6 +17,18 @@ public class BaseResponseDtoTest {
 
         assertThat(dto.getName()).isEqualTo(name);
         assertThat(dto.getAmount()).isEqualTo(amount);
+    }
+
+    @Test
+    public void lombokAppliedTest2(){
+        String nameBefore = "aaa";
+        int amount = 10000;
+        BaseResponseDto dto = new BaseResponseDto(nameBefore, amount);
+
+        String nameAfter = "bbb";
+        dto.setName(nameAfter);
+
+        assertThat(dto.getName()).isEqualTo(nameAfter);
 
     }
 }
