@@ -4,8 +4,6 @@ import com.jsh.dashboard.domain.posts.Posts;
 import com.jsh.dashboard.domain.posts.PostsRepository;
 import com.jsh.dashboard.web.dto.PostsSaveRequestDto;
 import com.jsh.dashboard.web.dto.PostsUpdateRequestDto;
-import com.sun.net.httpserver.HttpsServer;
-import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +40,7 @@ public class PostsApiControllerTest {
     }
 
     @Test
-    public void Posts_등록된다() throws Exception{
+    public void Posts_등록() throws Exception{
         // 데이터 전송 객체 생성
         String title = "abcd";
         String content = "asdfsadfasdfsaf";
@@ -63,7 +61,7 @@ public class PostsApiControllerTest {
     }
 
     @Test
-    public void Posts_수정된다() throws Exception{
+    public void Posts_수정() throws Exception{
         // 게시글 생성
         Posts savedPosts = postsRepository.save(Posts.builder()
                 .title("title")
@@ -92,5 +90,28 @@ public class PostsApiControllerTest {
         List<Posts> all = postsRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(updateTitle);
         assertThat(all.get(0).getContent()).isEqualTo(updateContent);
+
+    }
+
+    @Test
+    public void Posts_삭제() throws Exception{
+        // 게시글 생성
+        Posts posts = postsRepository.save(Posts.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+        Long postsId = posts.getId();
+
+        String url = "http://localhost:" + port + "/api/v1/posts/" + postsId;
+
+        HttpEntity<Posts> requestEntity = new HttpEntity<>(posts);
+        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, requestEntity, Long.class);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+
+        List<Posts> all = postsRepository.findAll();
+        assertThat(all).isEmpty();
     }
 }
