@@ -23,6 +23,5 @@ public class IndexControllerTest {
         String body = this.restTemplate.getForObject("/", String.class);
         System.out.println("body = " + body);
         assertThat(body).contains("Community");
-
     }
 }
