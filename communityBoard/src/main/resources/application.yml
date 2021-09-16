@@ -16,3 +16,8 @@ spring:
 
   session:
     store-type: jdbc
+
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    check-template-location: true
