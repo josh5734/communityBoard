@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommunityBoard</title>
+
+    <script src="https://kit.fontawesome.com/bdfd7f14f2.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <script th:src = "@{/main.js}" defer></script>
+    <script th:src="@{/category.js}"></script>
+
+</head>
+<body>
+<!-- NavBar -->
+<nav >
+
+    <div class="navbar-container">
+        <div>
+            <h2 class="navbar__title"><a th:href="@{/}" >Community Board Project </a></h2>
+        </div>
+        <div>
+            <ul class="navbar__menu">
+                <li class="navbar__menu__item"><a th:href="@{/}" >Home</a></li>
+                <li class="navbar__menu__item" th:unless="${userName}"><a th:href="@{/login}">로그인</a></li>
+                <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/posts/save}">글쓰기</a></li>
+                <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/logout}">로그아웃</a></li>
+                <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/mypage}">마이 페이지</a></li>
+                <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/category/add}">카테고리 생성</a></li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- Add Category -->
+<section id="section__container">
+    <form action="/api/category/add" method="post" id="add_category" >
+        <input type="text" name="categoryName" class="form-control" placeholder="새로운 카테고리">
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
+        <button type="submit" class="form-control">카테고리 추가하기</button>
+    </form>
+</section>
+
+
+</body>
+</html>
