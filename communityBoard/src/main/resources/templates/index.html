@@ -9,36 +9,120 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/sidebar.css}">
     <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/sidebar.css">
     <script src = "main.js" defer></script>
-
 </head>
 <body>
 <!-- NavBar -->
-<nav id="navbar">
-
+<nav >
     <div class="navbar-container">
         <div>
-            <h2 class="navbar__title">Community Board Project</h2>
+            <h2 class="navbar__title"><a th:href="@{/}" >Community Board Project </a></h2>
         </div>
         <div>
             <ul class="navbar__menu">
                 <li class="navbar__menu__item"><a th:href="@{/}" >Home</a></li>
                 <li class="navbar__menu__item" th:unless="${userName}"><a th:href="@{/login}">로그인</a></li>
+                <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/posts/save}">글쓰기</a></li>
                 <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/logout}">로그아웃</a></li>
+                <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/mypage}">마이 페이지</a></li>
+                <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/category/add}">카테고리 생성</a></li>
             </ul>
         </div>
     </div>
-
-
 </nav>
 
+<div class="page-wrapper chiller-theme toggled">
+    <nav id="sidebar" class="sidebar-wrapper">
+        <div class="sidebar-content">
+            <!-- sidebar-search  -->
+            <div class="sidebar-menu">
+                <ul>
+                    <li class="header-menu">
+                        <span>게시판 분류</span>
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fa fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
 
-<!-- Posts -->
-<section id="posts">
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span>E-commerce</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="far fa-gem"></i>
+                            <span>Components</span>
+                        </a>
+
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fa fa-chart-line"></i>
+                            <span>Charts</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fa fa-globe"></i>
+                            <span>Maps</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fa fa-globe"></i>
+                            <span>Maps</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fa fa-globe"></i>
+                            <span>Maps</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-dropdown">
+                        <a href="#">
+                            <i class="fa fa-globe"></i>
+                            <span>Maps</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- sidebar-menu  -->
+        </div>
+    </nav>
+    <!-- page-content" -->
+
     <div class="posts__container">
+        <table>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>날짜</th>
+            </tr>
+            <tr th:each="post : ${posts}">
+                <td th:text="${post.id}"></td>
+                <td th:text="${post.title}"></td>
+                <td th:text="${post.author}"></td>
+                <td th:text="${post.modifiedDate}"></td>
+            </tr>
+
+        </table>
     </div>
-</section>
+
+</div>
+
+
+
 
 </body>
 </html>

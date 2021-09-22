@@ -21,11 +21,6 @@ public class IndexController {
     private final HttpSession httpSession;
 
 
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
-
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user){
         model.addAttribute("posts", postsService.findAllDesc());
@@ -34,6 +29,18 @@ public class IndexController {
         }
         return "index";
     }
+
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping("/mypage")
+    public String mypage(){
+        return "mypage";
+    }
+
 
     @GetMapping("/posts/save")
     public String postsSave(){
@@ -46,5 +53,8 @@ public class IndexController {
         model.addAttribute("post", dto);
         return "posts-update";
     }
+
+    @GetMapping("/category/add")
+    public String categoryAdd(){return "category-add";}
 
 }
