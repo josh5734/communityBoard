@@ -2,9 +2,90 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommunityBoard</title>
+    <script src="https://kit.fontawesome.com/bdfd7f14f2.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}">
+    <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
 </head>
 <body>
-마이 페이지입니다.
+<!-- NavBar -->
+<nav >
+    <div class="navbar-container">
+        <div>
+            <h2 class="navbar__title"><a th:href="@{/}" >Community Board Project </a></h2>
+        </div>
+        <div>
+            <ul class="navbar__menu">
+                <li class="navbar__menu__item"><a th:href="@{/}" >Home</a></li>
+                <li class="navbar__menu__item" th:unless="${userName}"><a th:href="@{/login}">로그인</a></li>
+                <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/posts/save}">글쓰기</a></li>
+                <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/logout}">로그아웃</a></li>
+                <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/mypage}">마이 페이지</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="wrap">
+    <div class="greenContainer">
+        <div>
+            <div class="name" th:text="|안녕하세요, ${userName}님 |"></div>
+        </div>
+    </div>
+    <div class="summaryContainer">
+        <div class="item">
+            <div class="number">354</div>
+            <div>내가 쓴 게시물</div>
+        </div>
+        <div class="item">
+            <div class="number">354</div>
+            <div>좋아요를 누른 게시물</div>
+        </div>
+        <div class="item">
+            <div class="number">354</div>
+            <div>댓글을 작성한 게시물</div>
+        </div>
+    </div>
+
+    <div class="listContainer">
+        <a href="#" class="item">
+            <div class="icon">i</div>
+            <div class="text">프로필 관리<span class="circle"></span></div>
+            <div class="right"> > </div>
+        </a>
+        <a href="#" class="item">
+            <div class="icon">i</div>
+            <div class="text">비밀번호 변경</div>
+            <div class="right"> > </div>
+        </a>
+        <a href="#" class="item">
+            <div class="icon">i</div>
+            <div class="text">회원탈퇴</div>
+            <div class="right"> > </div>
+        </a>
+    </div>
+
+    <div class="infoContainer">
+        <a href="#" class="item">
+            <div>공지사항</div>
+        </a>
+        <a href="#" class="item">
+            <div>이용안내</div>
+        </a>
+        <a href="#" class="item">
+            <div>고객센터</div>
+        </a>
+    </div>
+</div>
+
+
+
+
 </body>
 </html>

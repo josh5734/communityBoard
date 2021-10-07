@@ -1,20 +1,26 @@
 package com.jsh.communityBoard.web.dto;
 
-import com.jsh.communityBoard.domain.posts.Posts;
+import com.jsh.communityBoard.domain.posts.Post;
+import lombok.Data;
 import lombok.Getter;
 
 @Getter
+@Data
 public class PostsResponseDto {
     private Long id;
+    private UserResponseDto user;
+    private String categoryName;
     private String title;
     private String content;
-    private String author;
+    private Integer viewCount;
 
-    public PostsResponseDto(Posts entity){
+
+    public PostsResponseDto(Post entity){
         this.id = entity.getId();
+        this.user = new UserResponseDto(entity.getUser());
+        this.categoryName = entity.getCategory().getName();
         this.title = entity.getTitle();
         this.content= entity.getContent();
-        this.author = entity.getAuthor();
-
+        this.viewCount = entity.getViewCount();
     }
 }

@@ -1,23 +1,39 @@
 spring:
   jpa:
     show_sql: true   # System out
-    ddl-auto: create
-    properties:
-      hibernate:
-        dialect=org.hibernate.dialect.MySQL5InnoDBDialect
-  h2:
-    console:
-      enabled: true
+    hibernate:
+      ddl-auto: update
+
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:mysql://localhost:3306/communityBoard?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: ta9488ut!!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: test
+            client-secret: test
+            scope: profile, email
 
   profiles:
     include: oauth
 
   session:
-    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+
 
   thymeleaf:
     prefix: classpath:templates/
     suffix: .html
     check-template-location: true
+
+
+#logging:
+#  level:
+#    org.hibernate.SQL: debug
+#    org.hibernate.type: trace

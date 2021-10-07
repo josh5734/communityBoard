@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CommunityBoard</title>
-
     <script src="https://kit.fontawesome.com/bdfd7f14f2.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/sidebar.css}">
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
-    <link rel="stylesheet" type="text/css" href="../static/sidebar.css">
-    <script src = "main.js" defer></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/posts.css}">
+    <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
 </head>
 <body>
 <!-- NavBar -->
@@ -29,7 +27,6 @@
                 <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/posts/save}">글쓰기</a></li>
                 <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/logout}">로그아웃</a></li>
                 <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/mypage}">마이 페이지</a></li>
-                <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/category/add}">카테고리 생성</a></li>
             </ul>
         </div>
     </div>
@@ -44,81 +41,76 @@
                     <li class="header-menu">
                         <span>게시판 분류</span>
                     </li>
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="fa fa-tachometer-alt"></i>
-                            <span>Dashboard</span>
-                        </a>
-
-                    </li>
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="fa fa-shopping-cart"></i>
-                            <span>E-commerce</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="far fa-gem"></i>
-                            <span>Components</span>
-                        </a>
-
-                    </li>
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="fa fa-chart-line"></i>
-                            <span>Charts</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown">
-                        <a href="#">
+                    <li th:each="category : ${categoryList}" class = "sidebar-dropdown">
+                        <a th:href = "@{|/api/v1/posts/category/${category.id}|}">
                             <i class="fa fa-globe"></i>
-                            <span>Maps</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="fa fa-globe"></i>
-                            <span>Maps</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="fa fa-globe"></i>
-                            <span>Maps</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-dropdown">
-                        <a href="#">
-                            <i class="fa fa-globe"></i>
-                            <span>Maps</span>
+                            <span th:text="${category.name}"></span>
                         </a>
                     </li>
                 </ul>
             </div>
-            <!-- sidebar-menu  -->
         </div>
     </nav>
-    <!-- page-content" -->
 
-    <div class="posts__container">
-        <table>
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>날짜</th>
-            </tr>
-            <tr th:each="post : ${posts}">
-                <td th:text="${post.id}"></td>
-                <td th:text="${post.title}"></td>
-                <td th:text="${post.author}"></td>
-                <td th:text="${post.modifiedDate}"></td>
-            </tr>
+    <div id="mainWrapper">
+        <ul>
+            <!-- 게시판 목록  -->
+            Table
+            <li>
+                <ul id ="ulTable">
+                    <li class = "table-header">
+                        <ul>
+                            <li>No</li>
+                            <li>제목</li>
+                            <li>작성자</li>
+                            <li>작성일</li>
+                            <li>조회수</li>
+                            <li>좋아요</li>
+                        </ul>
+                    </li>
+                    <!-- 게시물이 출력될 영역 -->
+                    <li th:each="post : ${postList}">
+                        <ul>
+                            <li th:text="${post.id}"></li>
+                            <a class="post-title" th:href = "@{|/api/v1/posts/${post.id}|}">
+                                <li th:text="${post.title}"></li>
+                            </a>
+                            <li th:text="${post.user.name}"></li>
+                            <li th:text="${post.createdDate}"></li>
+                            <li th:text="${post.viewCount}"></li>
+                            <li th:text="${post.postLikesCount}"></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
 
-        </table>
+            <!-- 게시판 페이징 영역 -->
+            <li>
+                <div id="divPaging">
+                    <div>◀</div>
+                    <div><b>1</b></div>
+                    <div>2</div>
+                    <div>3</div>
+                    <div>4</div>
+                    <div>5</div>
+                    <div>▶</div>
+                </div>
+            </li>
+
+            <!-- 검색 폼 영역 -->
+            <li id='liSearchOption'>
+                <div>
+                    <select id='selSearchOption' >
+                        <option value='A'>제목+내용</option>
+                        <option value='T'>제목</option>
+                        <option value='C'>내용</option>
+                    </select>
+                    <input id='txtKeyWord' />
+                    <input type='button' value='검색'/>
+                </div>
+            </li>
+        </ul>
     </div>
-
 </div>
 
 
@@ -126,3 +118,26 @@
 
 </body>
 </html>
+
+
+
+
+<!--<div class="posts__container">-->
+<!--    <table>-->
+<!--        <tr>-->
+<!--            <th>번호</th>-->
+<!--            <th>제목</th>-->
+<!--            <th>작성자</th>-->
+<!--            <th>날짜</th>-->
+<!--        </tr>-->
+<!--        <tr th:each="post : ${postList}" class="post-table-list" >-->
+<!--            <td th:text="${post.id}"></td>-->
+<!--            <a th:href = "@{|/api/v1/posts/${post.id}|}" >-->
+<!--                <td th:text="${post.title}">-->
+<!--                </td>-->
+<!--            </a>-->
+<!--            <td th:text="${post.user.name}"></td>-->
+<!--            <td th:text="${post.createdDate}"></td>-->
+<!--        </tr>-->
+<!--    </table>-->
+<!--</div>-->

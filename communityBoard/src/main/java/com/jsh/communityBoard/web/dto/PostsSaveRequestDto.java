@@ -1,25 +1,47 @@
 package com.jsh.communityBoard.web.dto;
 
-import com.jsh.communityBoard.domain.posts.Posts;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.jsh.communityBoard.domain.category.Category;
+import com.jsh.communityBoard.domain.like.PostLike;
+import com.jsh.communityBoard.domain.posts.Post;
+import com.jsh.communityBoard.domain.user.User;
+import lombok.*;
+
+import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
-public class PostsSaveRequestDto {
+@Data
+public class PostsSaveRequestDto{
+    private String user_name;
+    private User user;
+    private Integer category_id;
+    private Category category;
     private String title;
     private String content;
-    private String author;
+    private Integer viewCount;
+    private List<PostLike> postLikes;
+
 
     @Builder
-    public PostsSaveRequestDto(String title, String content, String author){
+    public PostsSaveRequestDto(Integer category_id, String title, String content){
+        this.category_id = category_id;
         this.title = title;
         this.content = content;
-        this.author = author;
     }
 
-    public Posts toEntity(){
-        return Posts.builder().title(title).content(content).author(author).build();
+    public void setUser(String user_name){
+        this.user_name = user_name;
+    }
+    public void setCategory(Category category){
+        this.category = category;
+    }
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public Post toEntity(){
+        Post post = new Post();
+        return post.createPost(user, category, title, content);
     }
 }

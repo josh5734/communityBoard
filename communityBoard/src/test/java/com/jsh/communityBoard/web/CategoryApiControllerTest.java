@@ -3,11 +3,10 @@ package com.jsh.communityBoard.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jsh.communityBoard.domain.category.Category;
-import com.jsh.communityBoard.domain.category.CategoryDao;
-import com.jsh.communityBoard.domain.posts.Posts;
-import com.jsh.communityBoard.domain.posts.PostsRepository;
+import com.jsh.communityBoard.domain.category.CategoryRepository;
+import com.jsh.communityBoard.service.posts.CategoryService;
+import com.jsh.communityBoard.web.dto.CategoryResponseDto;
 import com.jsh.communityBoard.web.dto.CategorySaveRequestDto;
-import com.jsh.communityBoard.web.dto.PostsSaveRequestDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,11 +39,14 @@ public class CategoryApiControllerTest {
     private TestRestTemplate restTemplate;  // JPA 기능까지 함께 테스트할 수 있음
 
     @Autowired
-    private CategoryDao categoryDao;
+    private CategoryRepository categoryRepository;
+    
+    @Autowired
+    private CategoryService categoryService;
 
     @AfterEach
     public void tearDown() throws Exception{
-        categoryDao.deleteAll();
+        categoryRepository.deleteAll();
     }
 
     @Autowired
@@ -62,23 +64,11 @@ public class CategoryApiControllerTest {
 
 
     @Test
-    @WithMockUser(roles="USER")
-    public void Category_생성() throws Exception{
-        // 데이터 전송 객체 생성
-        String name = "category1";
-
-        CategorySaveRequestDto requestDto = CategorySaveRequestDto.builder().name(name).build();
-        // PostMapping URL
-        String url = "http://localhost:" + port + "/api/category/add";
-
-        //when
-        mvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-                        .content(new ObjectMapper().writeValueAsString(requestDto)))
-                .andExpect(status().isOk());
-
-        List<Category> all = categoryDao.findAll();
-        assertThat(all.get(0).getName()).isEqualTo(name);
+    public void 모든카테고리조회(){
+        List<CategoryResponseDto> categoryLists = categoryService.findAll();
+        for(CategoryResponseDto category: categoryLists){
+            System.out.println("category.id = " + category.getId() + " category.name = " + category.getName());
+        }
     }
 
 

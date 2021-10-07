@@ -1,30 +1,29 @@
 package com.jsh.communityBoard.domain.category;
 
 
-import com.jsh.communityBoard.domain.user.Role;
-import lombok.Builder;
-import lombok.Data;
+import com.jsh.communityBoard.domain.posts.Post;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @Entity
 public class Category {
+
     @Id
     @GeneratedValue
+    @Column(name="CATEGORY_ID")
     private int id;
 
-    @Column(unique = true)
     private String name;
 
+    @OneToMany(mappedBy = "category")
+    private List<Post> postsList = new ArrayList<>();
 
-    @Builder
     public Category(String name){
         this.name = name;
     }

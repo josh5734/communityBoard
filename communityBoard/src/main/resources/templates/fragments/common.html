@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head >
+<head th:fragment = "html-head">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CommunityBoard</title>
@@ -10,18 +10,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="stylesheet" type="text/css" href="sidebar.css">
-    <script th:src = "@{/main.js}" defer></script>
-    <script th:src="@{/category.js}"></script>
+    <script src = "main.js" defer></script>
 
 </head>
 <body>
 <!-- NavBar -->
-<nav >
+<nav th:fragment="header-navbar(userName)" id="navbar" >
 
     <div class="navbar-container">
         <div>
-            <h2 class="navbar__title"><a th:href="@{/}" >Community Board Project </a></h2>
+            <h2 class="navbar__title">Community Board Project</h2>
         </div>
         <div>
             <ul class="navbar__menu">
@@ -31,22 +29,12 @@
                 <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/logout}">로그아웃</a></li>
                 <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/mypage}">마이 페이지</a></li>
                 <li class="navbar__menu__item" th:if="${userName}"><a th:href="@{/category/add}">카테고리 생성</a></li>
-
             </ul>
         </div>
     </div>
+
+
 </nav>
-
-
-<!-- Add Category -->
-<section id="section__container">
-    <form action="/api/category/add" method="post" id="add_category" >
-        <input type="text" name="categoryName" class="form-control" placeholder="새로운 카테고리">
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <button type="submit" class="form-control">카테고리 추가하기</button>
-    </form>
-</section>
-
 
 </body>
 </html>

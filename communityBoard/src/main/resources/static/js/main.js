@@ -1,15 +1,13 @@
-const saveForm = document.querySelector('.save-form')
 const saveBtn = document.getElementById('btn-save')
-
 saveBtn.addEventListener("click", save);
-console.log("123")
 function save(){
+    var categoryBox = document.getElementById('category-box')
     let data = {
+        category_id : categoryBox.options[categoryBox.selectedIndex].value,
         title : document.getElementById('title').value,
-        author : document.getElementById('author').value,
         content : document.getElementById('content').value
     };
-
+    console.log(data);
     fetch("/api/v1/posts", {
         method: "POST",
         headers:{
@@ -17,7 +15,13 @@ function save(){
         },
         body: JSON.stringify(data)
     })
-        .then((response) => console.log(response))
+        .then((response) => {
+            alert('글이 등록되었습니다.');
+            window.location.href = '/';
+        })
+        .catch((e=>{
+            alert(e);
+        }))
 }
 
 /*
