@@ -40,15 +40,19 @@
     </div>
     <div class="summaryContainer">
         <div class="item">
-            <div class="number">354</div>
-            <div>내가 쓴 게시물</div>
+            <a th:href = "@{/api/posts/userWritten/{id}(id = ${userId})}">
+                <div class="number" th:text="${postCount}"></div>
+                <div>내가 쓴 게시물</div>
+            </a>
         </div>
         <div class="item">
-            <div class="number">354</div>
-            <div>좋아요를 누른 게시물</div>
+            <a th:href = "@{/api/posts/liked/{id}(id = ${userId})}">
+                <div class="number" th:text="${likeCount}"></div>
+                <div>좋아요를 누른 게시물</div>
+            </a>
         </div>
         <div class="item">
-            <div class="number">354</div>
+            <div class="number" th:text="${commentCount}"></div>
             <div>댓글을 작성한 게시물</div>
         </div>
     </div>
@@ -83,9 +87,5 @@
         </a>
     </div>
 </div>
-
-
-
-
 </body>
 </html>

@@ -2,57 +2,393 @@
 #mainWrapper{
     width: 80%;
     margin: 0 auto; /*가운데 정렬*/
+    padding: 20px;
 }
 
-.post__header{
-    padding:15px;
-}
-.post__body-header{
-    display: flex;
-    align-items: center;
-    padding:10px;
-    border : 1px solid #e3e3e3;
-    margin: 3px 0;
+
+/* 글 헤더 영역 */
+#container > div.title {
+    margin-bottom: -20px;
+    padding: 15px;
+    border: 1px solid #d6d6d6;
+    box-sizing: border-box;
 }
 
-.post__body-header-info{
-    margin-right: 20px;
+
+#container > div.articles > article img.picture.large {
+    margin: 0 10px 15px 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
 }
 
-.writer-image{
-    border-radius: 50%;
-    height: 50px;
-    width: 50px;
-}
-
-.post__body-content{
-    padding: 10px;
-    height:350px;
-    border : 1px solid #e3e3e3;
-}
-
-.post__status {
-    display: flex;
-    padding: 10px;
-    justify-content: space-between;
-}
-
-.post__status > div{
-    display: flex;
-    margin-right: 10px;
-}
-
-.post__status > div > div{
-    display: flex;
-    margin-right: 10px;
-}
-
-.post__status-right > div{
-    border : 1px solid #e3e3e3;
-}
-
-.status__image{
+#container > div.articles > article img.picture.medium {
+    margin: 0 5px 5px 0;
     width: 20px;
     height: 20px;
+    border-radius: 4px;
 }
 
+#container > div.articles > article img.picture {
+    float: left;
+}
+
+img, input, select, textarea {
+    vertical-align: middle;
+}
+
+img {
+    border: 0;
+}
+#container > div.articles > article > a.article {
+    display: block;
+    padding: 15px;
+}
+
+#container > div.articles > article div.profile {
+    float: left;
+    margin-right:20px;
+}
+#container > div.articles > article h3 {
+    color: #292929;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.post-title{
+    margin-top:5px;
+    margin-bottom: 30px;
+}
+
+#container > div.article > article h2{
+    margin-bottom: 15px;
+    height: 40px;
+}
+
+#container > div.articles > article h3.large {
+    height: 20px;
+    max-width: 200px;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#container > div.articles > article h3.medium {
+    float: left;
+    max-width: 90px;
+    margin: 0 10px 5px 0;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+#container > div.articles > article time.large {
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+}
+
+#container > div.articles > article span.category.medium, #container > div.articles > article time.medium {
+    float: left;
+    margin-bottom: 5px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+}
+#container > div.articles > article span.category, #container > div.articles > article time {
+    color: #a6a6a6;
+    letter-spacing: 0;
+}
+
+#container > div.articles > article p.large {
+    padding-bottom: 15px;
+    line-height: 20px;
+    color: #444444;
+    font-size: 14px;
+}
+
+#container > div.articles > article > div.comments article p.large {
+    padding-bottom: 5px;
+}
+
+#container > div.articles > article > div.comments article time {
+    padding-bottom: 5px;
+}
+
+#container > div.articles > article p {
+    word-break: break-all;
+}
+
+#container > div.articles > article ul.status.left {
+    float: left;
+}
+
+.left {
+    text-align: left !important;
+}
+
+#container > div.articles > article ul.status.left li {
+    margin-left: 0;
+    margin-right: 8px;
+    cursor: auto;
+}
+
+
+#container > div.articles > article ul.status li.vote {
+    padding-left: 15px;
+    color: #c62917;
+    background-image: url(https://everytime.kr/images/new/container.articles.vote.png);
+}
+#container > div.articles > article ul.status li.comment {
+    padding-left: 15px;
+    color: #0ca5af;
+    background-image: url(https://everytime.kr/images/new/container.articles.comment.png);
+}
+#container > div.articles > article ul.status li.scrap {
+    padding-left: 15px;
+    color: #ffcc1c;
+    background-image: url(https://everytime.kr/images/new/container.articles.scrap.png);
+}
+
+#container > div.articles > article div.buttons {
+    display: flex;
+    padding-top: 16px;
+}
+
+#container > div.articles > article div.buttons span.posvote {
+    background-image: url(https://everytime.kr/images/container.articles.buttons.posvote.png);
+}
+#container > div.articles > article div.buttons span.scrap {
+    background-image: url(https://everytime.kr/images/container.articles.buttons.scrap.png);
+}
+#container > div.articles > article div.buttons > span {
+    margin-right: 4px;
+    padding: 0 12px 0 27px;
+    line-height: 30px;
+    border-radius: 8px;
+    color: #737373;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    background-repeat: no-repeat;
+    background-position: left 12px center;
+    background-size: 11px 11px;
+}
+#container > div.articles > article hr {
+    clear: both;
+    height: 0;
+    border: 0;
+}
+#container hr {
+    clear: both;
+    width: 100%;
+    height: 0;
+    border: 0;
+}
+
+/* 글 수정하기 */
+#container > div.articles > form.write {
+    position: relative;
+    margin-bottom: 5px;
+    border: 2px solid #d6d6d6;
+    box-sizing: border-box;
+}
+
+#container > div.articles > form.write input.title {
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    border: 0;
+    color: #292929;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#container > div.articles > form.write textarea {
+    width: 100%;
+    height: 350px;
+    border: 0;
+    color: #292929;
+    font-size: 14px;
+    resize: none;
+}
+#container > div.articles > form.write *:focus {
+    outline: none;
+}
+
+#container > div.articles > form.write p {
+    padding: 15px;
+    border-bottom: 1px solid #e3e3e3;
+    background-color: #fff;
+    margin: 0;
+}
+
+#container > div.articles > form.write ul.option li.attach {
+    float: left;
+    background-image: url(https://everytime.kr/images/new/container.articles.write.attach.png);
+}
+#container > div.articles > form.write ul.option li {
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 40px 40px;
+    cursor: pointer;
+}
+
+#container > div.articles > form.write ul.option li.submit {
+    float: right;
+    background-color: #c62917;
+    background-image: url(https://everytime.kr/images/new/container.articles.write.submit.png);
+}
+#container > div.articles > div.pagination > a.cancel {
+    float: left;
+    background-image: url(https://everytime.kr/images/new/container.articles.pagination.prev.png);
+}
+#container > div.articles > div.pagination > a {
+    display: block;
+    margin-top: 5px;
+    margin-left: 5px;
+    padding: 0 10px 0 25px;
+    height: 35px;
+    line-height: 35px;
+    border: 1px solid #c62917;
+    border-radius: 3px;
+    color: #c62917;
+    font-size: 14px;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 10px 10px;
+    cursor: pointer;
+}
+
+
+
+/* 댓글 */
+
+#container > div.articles > article > div.comments article.parent {
+    padding: 15px 15px 0 15px;
+    border-top: 1px solid #e3e3e3;
+}
+
+#container > div.articles > article > div.comments article {
+    margin: 0;
+    border: 0;
+    background-color: #fff;
+}
+
+#container > div.articles > article > div.comments article.child {
+    margin: -5px 4px 4px 35px;
+    padding: 10px 10px 0 10px;
+    border: 1px solid #e3e3e3;
+    background-color: #f9f9f9;
+}
+
+.writecomment {
+    position: relative;
+    border-top: 1px solid #e3e3e3;
+    background-color: #f8f8f8;
+}
+
+.writecomment.child {
+    margin: 0 4px 4px 35px;
+    border: 1px solid #e3e3e3;
+}
+
+.active{
+    background-color: aliceblue !important;
+}
+
+.writecomment input.text {
+    margin: 0;
+    padding: 10px 85px 10px 10px;
+    border: 0;
+    width: 100%;
+    height: 40px;
+    line-height: 20px;
+    box-sizing: border-box;
+    color: #262626;
+    font-size: 13px;
+    overflow: hidden;
+    resize: none;
+    background-color: transparent;
+}
+.writecomment ul.option {
+    position: absolute;
+    display: flex;
+    right: 0;
+    top: 0;
+    height: 40px;
+    font-size: 0;
+}
+
+.writecomment ul.option li.submit {
+    background-color: #c62917;
+    background-image: url(https://everytime.kr/images/new/container.articles.write.submit.png);
+}
+
+.writecomment ul.option li.cancel {
+    line-height: 3.2 !important;
+    text-align: center;
+    display: none;
+}
+.visible{
+    display: inline-block !important;
+}
+
+
+.writecomment ul.option li {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 40px 40px;
+    cursor: pointer;
+}
+
+#container > div.articles > article > div.comments article time {
+    padding-bottom: 5px;
+}
+#container > div.articles > article time.medium {
+    float: left;
+    margin-bottom: 5px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+}
+
+.clearBothOnly {
+    clear: both !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 0 !important;
+}
+
+#container > div.articles > div.pagination > a.list {
+    float: left;
+    background-image: url(https://everytime.kr/images/new/container.articles.pagination.list.png);
+}
+
+#container > div.articles > div.pagination > a {
+    display: block;
+    margin-top: 5px;
+    margin-left: 5px;
+    padding: 0 10px 0 25px;
+    height: 35px;
+    line-height: 35px;
+    border: 1px solid #c62917;
+    border-radius: 3px;
+    color: #c62917;
+    font-size: 14px;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    background-size: 10px 10px;
+    cursor: pointer;
+}

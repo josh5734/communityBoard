@@ -43,7 +43,7 @@ div{
     margin-left: auto;
 }
 
-/* 단골상점 , 상품후기 , 적립금 박스 */
+/* 내가 쓴 게시물, 좋아요를 누른 게시물, 댓글 단 게시물 박스 */
 .summaryContainer{
     background-color: white;
     display: flex;
@@ -51,10 +51,12 @@ div{
     height: 90px;
     margin-bottom: 10px;
 }
-/* 단골상점 , 상품후기 , 적립금 */
+/*  내가 쓴 게시물, 좋아요를 누른 게시물, 댓글 단 게시물  */
 .summaryContainer .item{
-    flex-grow: 1
+    flex-grow: 1;
+    margin-right: 50px;
 }
+
 /* 녹색 숫자 */
 .summaryContainer .number{
     font-size: 19px;

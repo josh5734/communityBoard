@@ -3,83 +3,101 @@ body{
     font-family:"맑은 고딕";
 }
 
-
-#mainWrapper{
+#container{
     width: 80%;
     margin: 0 auto; /*가운데 정렬*/
 }
 
-#mainWrapper > ul > li:first-child {
-    text-align: center;
-    font-size:14pt;
-    height:40px;
-    vertical-align:middle;
-    line-height:30px;
+
+#container > div.articles > article {
+    margin-bottom: -1px;
+    box-sizing: border-box;
+    border: 1px solid #e3e3e3;
+    background-color: #fff;
 }
 
-#ulTable {margin-top:10px;}
-
-
-#ulTable > li:first-child > ul > li {
-    background-color:#c9c9c9;
-    font-weight:bold;
-    text-align:center;
+#container > div.articles > article > a.article {
+    display: block;
+    padding: 15px;
 }
 
-#ulTable > li > ul {
-    clear:both;
-    padding:0px auto;
-    position:relative;
-    min-width:40px;
-}
-#ulTable > li > ul > li {
-    float:left;
-    font-size:10pt;
-    border-bottom:1px solid silver;
-    vertical-align:baseline;
+#container > div.articles > article h2.medium {
+    margin-bottom: 5px;
+    line-height: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-weight: normal;
 }
 
-.post-title{
-    float:left;
-    font-size:10pt;
-    border-bottom:1px solid silver;
-    vertical-align:baseline;
+#container > div.articles > article p.small {
+    margin-bottom: 5px;
+    max-height: 30px;
+    line-height: 15px;
+    white-space: normal;
+    overflow: hidden;
+    color: #a6a6a6;
+    font-size: 12px;
+}
+#container > div.articles > article span.category, #container > div.articles > article time {
+    color: #a6a6a6;
+    letter-spacing: 0;
+}
+#container > div.articles > article time.small {
+    float: left;
+    margin-right: 5px;
+    height: 15px;
+    line-height: 15px;
+    font-size: 11px;
 }
 
-.table-header > ul > li:first-child  {width:5%;} /*No 열 크기*/
-.table-header > ul > li:first-child + li  {width:45%;} /*제목 열 크기*/
-.table-header > ul > li:first-child + li + li {width:15%;} /*작성일 열 크기*/
-.table-header > ul > li:first-child + li + li + li  {width:20%;} /*작성자 열 크기*/
-.table-header > ul > li:first-child + li + li + li + li {width:5%;} /*조회수 열 크기*/
-.table-header > ul > li:first-child + li + li + li + li + li {width:5%;} /*조회수 열 크기*/
-.table-header > ul > li:first-child + li + li + li + li + li + li{width:5%;} /*조회수 열 크기*/
-
-#ulTable > li > ul > li:first-child               {width:5%;} /*No 열 크기*/
-#ulTable > li > ul > li:first-child +a           {width:45%;} /*제목 열 크기*/
-#ulTable > li > ul > li:first-child +a+li        {width:15%;} /*작성일 열 크기*/
-#ulTable > li > ul > li:first-child +a+li+li     {width:20%;} /*작성자 열 크기*/
-#ulTable > li > ul > li:first-child +a+li+li+li{width:5%;} /*조회수 열 크기*/
-#ulTable > li > ul > li:first-child +a+li+li+li + li{width:5%;} /*조회수 열 크기*/
-#ulTable > li > ul > li:first-child +a+li+li+li + li + li{width:5%;} /*조회수 열 크기*/
-
-#divPaging {
-    clear:both;
-    margin:0 auto;
-    width:220px;
-    height:50px;
+#container > div.articles > article p {
+    margin-top: 0;
+    word-break: break-all;
 }
 
-#divPaging > div {
-    float:left;
-    width: 30px;
-    margin:0 auto;
-    text-align:center;
+#container > div.articles > article h3 {
+    color: #292929;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.left {
-    text-align : left;
+#container > div.articles > article h3.small {
+    float: left;
+    max-width: 90px;
+    height: 15px;
+    line-height: 15px;
+    font-size: 11px;
+    font-weight: normal;
+    letter-spacing: 0;
+}
+#container > div.articles > article ul.status {
+    float: right;
+    margin: 0;
 }
 
+#container > div.articles > article ul.status li {
+    float: left;
+    margin-left: 8px;
+    padding: 0 2px;
+    height: 20px;
+    line-height: 20px;
+    color: #a6a6a6;
+    font-size: 12px;
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 11px 11px;
+    cursor: pointer;
+}
+
+.status-box{
+    margin-bottom: 15px;
+}
+
+
+/* 검색 폼 영역 */
 #searchArticleForm{
     float: left; margin-top: 5px; margin-left: 5px; padding: 8px 25px 8px 5px; border: 1px solid #a6a6a6; border-radius: 3px;
     background: transparent url('https://everytime.kr/images/new/container.articles.pagination.search.png') no-repeat right 10px center; background-size: 16px 16px;

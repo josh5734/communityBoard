@@ -3,6 +3,7 @@ package com.jsh.communityBoard.domain.posts;
 
 import com.jsh.communityBoard.domain.BaseTimeEntity;
 import com.jsh.communityBoard.domain.category.Category;
+import com.jsh.communityBoard.domain.comment.Comment;
 import com.jsh.communityBoard.domain.like.PostLike;
 import com.jsh.communityBoard.domain.user.User;
 import lombok.Getter;
@@ -10,9 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -40,12 +39,10 @@ public class Post extends BaseTimeEntity {
     private User user;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    List<PostLike> postLikes = new ArrayList<>();
+    private List<PostLike> postLikes = new ArrayList<>(); // 좋아요 리스트
 
-    public void addPostLike(PostLike postLike){
-        this.postLikes.add(postLike);
-        postLike.setPost(this);
-    }
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> commentList = new ArrayList<>(); // 댓글 리스트
 
     public Post createPost(User user, Category category, String title, String content){
         this.user = user;
@@ -53,7 +50,7 @@ public class Post extends BaseTimeEntity {
         this.title = title;
         this.content = content;
         this.viewCount = 0;
-        this.postLikes = new ArrayList<>();
+//        this.postLikes = new ArrayList<>();
         this.user.getPostsList().add(this);
         this.category.getPostsList().add(this);
         return this;

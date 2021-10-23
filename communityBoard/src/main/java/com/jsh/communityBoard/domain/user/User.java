@@ -1,6 +1,7 @@
 package com.jsh.communityBoard.domain.user;
 
 import com.jsh.communityBoard.domain.BaseTimeEntity;
+import com.jsh.communityBoard.domain.comment.Comment;
 import com.jsh.communityBoard.domain.posts.Post;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,6 +35,10 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user")
     private List<Post> postsList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> commentList = new ArrayList<>();
+
 
     @Builder
     public User(String name, String email, String picture, Role role){

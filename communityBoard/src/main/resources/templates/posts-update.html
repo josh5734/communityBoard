@@ -11,8 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/posts.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/post-detail.css}">
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
-    <script src="../static/js/main.js"></script>
 
 
 </head>
@@ -54,41 +55,57 @@
             </div>
         </div>
     </nav>
-    <!-- page-content -->
 
-    <div class="container">
-        <h2>글 수정</h2>
-        <form>
-            <div class="form-group">
-                <label for="title">글 번호</label>
-                <input type="text" class="form-control" id="id" value="{{post.id}}" readonly>
+
+    <!-- 수정 폼 -->
+    <div id="container">
+        <div class = "wrap title" id = "categoryName" th:text="${categoryName}"></div>
+        <div class = "wrap articles">
+            <form class="write">
+                <p ><input autocomplete="off" id = "title" placeholder="글 제목" class="title" th:value="${post.title}"></p>
+                <p>
+                    <textarea name="text" id = "content"placeholder="수정할 내용을 작성하세요." class="smallplaceholder"
+                    th:text="${post.content}">
+                    </textarea>
+                </p>
+                <ul class="option">
+                    <li class = "attach"></li>
+                    <li class = "submit" th:onclick="|javascript:update()|"></li>
+                </ul>
+            </form>
+            <div class = "pagination">
+                <a class = "cancel" th:href="@{|/api/v1/posts/${post.id}|}">취소하기</a>
             </div>
-
-
-            <div class="form-group">
-                <label for="title">제목</label>
-                <input type="text" class="form-control" id="title" maxlength="100" required="required" pattern=".{4,100}" value = {{post.title}}>
-            </div>
-
-            <div class="form-group">
-                <label for="author">작성자</label>
-                <input type="text" class="form-control" id="author" value = {{post.author}} readonly>
-            </div>
-
-            <div class="form-group">
-                <label for="content">내용</label>
-                <textarea class="form-control" rows="5" id="content">{{post.content}}</textarea>
-            </div>
-        </form>
-
-        <a href="/" role="button" class="btn btn-secondary">취소</a>
-        <button type="button" class="btn btn-primary" id="btn-update">수정 완료</button>
-        <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
+        </div>
     </div>
-
-
 </div>
-<script type="text/javascript" th:src="@{/main.js}" defer></script>
-<script type="text/javascript" src="../static/js/main.js" defer></script>
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    const postId = [[${post.id}]];
+    function update(){
+        let data = {
+            title : document.getElementById('title').value,
+            content : document.getElementById('content').value
+        };
+        console.log(data);
+        fetch("/api/posts/update/" + postId, {
+            method: "PUT",
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+            .then((response) => {
+                alert('글이 수정되었습니다.');
+                window.location.href = '/';
+            })
+            .catch((e=>{
+                alert(e);
+            }))
+    }
+
+    /*]]>*/
+</script>
 </body>
 </html>

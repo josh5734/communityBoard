@@ -32,27 +32,19 @@ public class PostsApiController {
 
 
     // 수정 API
-    @PutMapping("/api/v1/posts/{id}")
+    @PutMapping("/api/posts/update/{id}")
     public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto){
         return postsService.update(id, requestDto);
     }
-
-
     // 전체 조회
     @GetMapping("/api/v1/posts/all")
     public List<PostsListResponseDto> findAll(){
         return postsService.findAllDesc();
     }
 
-    // 유저 아이디로 조회 API
-    @GetMapping("/api/v1/posts/user/{id}")
-    public List<PostsListResponseDto> findByUser (@PathVariable Long id){
-        return postsService.findByUser(id);
-    }
-
 
     // 삭제 API
-    @DeleteMapping("/api/v1/posts/{id}")
+    @DeleteMapping("/api/posts/delete/{id}")
     public Long delete(@PathVariable Long id){
         postsService.delete(id);
         return id;

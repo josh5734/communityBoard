@@ -3,19 +3,18 @@ package com.jsh.communityBoard.service.posts;
 
 import com.jsh.communityBoard.domain.category.Category;
 import com.jsh.communityBoard.domain.category.CategoryRepository;
+import com.jsh.communityBoard.domain.like.PostLike;
 import com.jsh.communityBoard.domain.posts.Post;
 import com.jsh.communityBoard.domain.posts.PostsRepository;
 import com.jsh.communityBoard.domain.user.User;
 import com.jsh.communityBoard.domain.user.UserRepository;
-import com.jsh.communityBoard.web.dto.PostsListResponseDto;
-import com.jsh.communityBoard.web.dto.PostsResponseDto;
-import com.jsh.communityBoard.web.dto.PostsSaveRequestDto;
-import com.jsh.communityBoard.web.dto.PostsUpdateRequestDto;
+import com.jsh.communityBoard.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -60,35 +59,30 @@ public class PostsService {
         postsRepository.delete(posts);
     }
 
-    // 유저 아이디로 조회
+    // 유저가 쓴 모든 게시물 조회
     @Transactional
     public List<PostsListResponseDto> findByUser(Long user_id) {
-        return postsRepository.findByUser(user_id).stream()
-                .map(PostsListResponseDto::new)
-                .collect(Collectors.toList());
+        return postsRepository.findByUser(user_id);
     }
 
     // 게시물 아이디로 조회
     public PostsResponseDto findById(Long id){
         Post entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
-        return new PostsResponseDto(entity);
+        return new PostsResponseDto(entity, entity.getPostLikes().size());
     }
 
     // 카테고리명으로 조회
     public List<PostsListResponseDto> findByCategory(Integer id){
-        return postsRepository.findByCategory(id).stream()
-                .map(PostsListResponseDto::new)
-                .collect(Collectors.toList());
+        return postsRepository.findByCategory(id);
     }
 
     // 모든 포스트 조회
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc(){
-        return postsRepository.findAllDesc().stream()
-                .map(PostsListResponseDto::new)
-                .collect(Collectors.toList());
+        return postsRepository.findAllDesc();
     }
+
 
     public void increaseViewCount(Long id) {
         Optional<Post> post = postsRepository.findById(id);

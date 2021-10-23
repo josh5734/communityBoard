@@ -54,49 +54,28 @@
     </nav>
     <!-- page-content" -->
 
-    <div id="mainWrapper">
-        <ul>
-            <!-- 게시판 목록  -->
-            Table
-            <li>
-                <ul id ="ulTable">
-                    <li class = "table-header">
-                        <ul>
-                            <li>No</li>
-                            <li>제목</li>
-                            <li>작성자</li>
-                            <li>작성일</li>
-                            <li>조회수</li>
+    <div id="container">
+        <div class="wrap title" th:text="${categoryName}">전체 글</div>
+        <div class="wrap articles">
+            <article th:each="post : ${postList}">
+                <a class = "article" th:href = "@{/api/v1/posts/{id}(id = ${post.id})}">
+                    <h2 class = "medium" th:text="${post.title}"></h2>
+                    <div class = "status-box">
+                        <p class = "small" th:text="${post.content}"></p>
+                        <time class = "small">방금</time>
+                        <h3 class ="small" th:text="${post.user.name}"></h3>
+                        <ul class = "status">
+                            <li class="view" th:text="${post.viewCount}"></li>
+                            <li class="like" th:text="${post.postLikesCount}"></li>
+                            <li class="comment">0</li>
                         </ul>
-                    </li>
-                    <!-- 게시물이 출력될 영역 -->
-                    <li th:each="post : ${postList}">
-                        <ul>
-                            <li th:text="${post.id}"></li>
-                            <a class="post-title" th:href = "@{|/api/v1/posts/${post.id}|}">
-                                <li th:text="${post.title}"></li>
-                            </a>
-                            <li th:text="${post.user.name}"></li>
-                            <li th:text="${post.createdDate}"></li>
-                            <li>0</li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+                    </div>
 
-            <!-- 게시판 페이징 영역 -->
-            <li>
-                <div id="divPaging">
-                    <div>◀</div>
-                    <div><b>1</b></div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
-                    <div>5</div>
-                    <div>▶</div>
-                </div>
-            </li>
-        </ul>
+                </a>
+            </article>
+        </div>
+
+        <!-- 검색 폼 영역 -->
         <div>
             <form id="searchArticleForm">
                 <select name = "search-type">
@@ -109,9 +88,6 @@
             </form>
         </div>
     </div>
-
-    <!-- 검색 폼 영역 -->
-
 </div>
 </body>
 </html>

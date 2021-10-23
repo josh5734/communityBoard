@@ -19,10 +19,20 @@ public class PostsListResponseDto {
     private String content;
     private Integer viewCount;
     private Integer postLikesCount;
-    private List<PostLikeDto> postLikes;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-
+//
+//    public PostsListResponseDto(Post entity, Long postLikesCount){
+//        this.id = entity.getId();
+//        this.user = new UserResponseDto(entity.getUser());
+//        this.category = new CategoryResponseDto(entity.getCategory());
+//        this.title = entity.getTitle();
+//        this.content= entity.getContent();
+//        this.viewCount = entity.getViewCount();
+//        this.postLikesCount = postLikesCount;
+//        this.createdDate = entity.getCreatedDate();
+//        this.modifiedDate = entity.getModifiedDate();
+//    }
     public PostsListResponseDto(Post entity){
         this.id = entity.getId();
         this.user = new UserResponseDto(entity.getUser());
@@ -30,8 +40,7 @@ public class PostsListResponseDto {
         this.title = entity.getTitle();
         this.content= entity.getContent();
         this.viewCount = entity.getViewCount();
-        this.postLikes = entity.getPostLikes().stream().map(PostLikeDto::new).collect(Collectors.toList());
-        this.postLikesCount = postLikes.size();
+        this.postLikesCount = entity.getPostLikes().size();
         this.createdDate = entity.getCreatedDate();
         this.modifiedDate = entity.getModifiedDate();
     }

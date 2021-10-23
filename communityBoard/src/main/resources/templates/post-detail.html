@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/posts.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/post-detail.css}">
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
-    <script type="text/javascript" th:src="@{/js/postDetail.js}" defer></script>
 </head>
 <body>
 <!-- NavBar -->
@@ -55,56 +54,180 @@
     </nav>
     <!-- 게시물 본문 -->
 
-    <div id="mainWrapper">
-        <div class = "post__header" style="background-color: #04c75a" th:text="${categoryName}"></div>
-        <div class = "post__body">
-            <div class = "post__body-header">
-                <div class = "post__body-header-picture">
-                    <img src="https://cf-fpi.everytime.kr/0.png" class = "writer-image">
-                </div>
-                <div class = "post__body-header-info">
-                    <div th:text="${post.user.name}" >익명</div>
-                    <div>3분 전</div>
-                </div>
-                <div class = "post__body-header-title"><h2 th:text="${post.title}"></h2></div>
-            </div>
-            <div class = "post__body-content">
-                <p th:text="${post.content}">
-                </p>
-            </div>
-            <div class = "post__status">
-                <div class = "post__status-left">
-                    <div>
-                        <div><img class = "status__image" src="https://everytime.kr/images/new/container.articles.vote.png" ></div>
-                        <div> 3 </div>
+    <div id="container">
+        <div class = "wrap title" th:text="${categoryName}"></div>
+        <div class = "wrap articles">
+            <article>
+                <a class ="article">
+                    <img src="https://cf-fpi.everytime.kr/0.png" class="picture large">
+                    <div class="profile">
+                        <h3 class = "large" th:text="${post.user.name}"></h3>
+                        <time class= "large">방금</time>
                     </div>
-                    <div>
-                        <div><img class = "status__image" src="https://everytime.kr/images/new/container.articles.comment.png" ></div>
-                        <div> 4 </div>
+
+                    <ul class = "status">
+                        <li class="update" th:onclick="|location.href='@{/posts/update/{id}(id=${post.id})}'|">수정</li>
+                        <li class="del" th:onclick="|javascript:checkDelete()|">삭제</li>
+                    </ul>
+
+                    <h2 class="large post-title" th:text="${post.title}"></h2>
+                    <hr>
+                    <p class="large" th:text="${post.content}"></p>
+                    <ul class="status left">
+                        <li class="vote" id = "likeCount" th:text="${post.postLikesCount}"></li>
+                        <li class="comment">0</li>
+                        <li class="scrap">0</li>
+                    </ul>
+                    <hr>
+                    <div class="buttons">
+                        <span class="posvote" th:onclick="|javascript:handleLikeBtn()|">좋아요💚</span>
+                        <span class="scrap">스크랩</span>
                     </div>
-                    <div>
-                        <div><img class = "status__image" src="https://everytime.kr/images/new/container.articles.scrap.png" ></div>
-                        <div> 5 </div>
-                    </div>
+                </a>
+
+                <div class = "comments" >
+                    <article th:each="comment: ${comments}" th:id = "'articleBox' + '-' + ${comment.commentOrder}" th:class="${comment.commentOrder == comment.parentCommentNum ? 'parent' : 'child'}">
+                        <img src="https://cf-fpi.everytime.kr/0.png" class="picture medium">
+                        <div class = "profile">
+                            <h3 class="medium" th:text="${comment.writer}"></h3>
+                            <time class= "medium">방금</time>
+                        </div>
+                        <ul class = "status">
+                            <li th:if="${comment.commentOrder == comment.parentCommentNum}" class = "childcomment" th:onclick="|javascript:commentReply(${comment.commentOrder})|">대댓글</li>
+                            <li class = "commentvote">공감</li>
+                            <li class = "abuse">신고</li>
+                        </ul>
+                        <hr>
+                        <p class = "large" th:text="${comment.content}"></p>
+
+                    </article>
+
+                    <form class ="writecomment">
+                        <input type="text" maxlength="300" autocomplete="off" placeholder="댓글을 입력하세요." class="text" id = "commentInput">
+                        <ul id = "commentInputOption" class = "option">
+                            <li title="취소" id = "commentAddCancelBtn" class="cancel" th:onclick="|javascript:replyCancel(this)|">취소</li>
+                            <li title="완료" id = "commentAddBtn" class="submit" th:onclick="|javascript:addComment()|"></li>
+                        </ul>
+                    </form>
+
                 </div>
-                <div class = "post__status-right">
-                    <div id = "like-box">좋아요💚</div>
-                    <div id = "scrap-box">스크랩⭐️</div>
-                </div>
+            </article>
+
+
+            <div class="clearBothOnly"></div>
+            <div class="pagination">
+                <a id = "goBackListButton" class = "list">글 목록</a>
             </div>
         </div>
     </div>
 </div>
-
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    const likeBtn = document.getElementById('like-box')
-    likeBtn.addEventListener("click", handlingLikeBtn());
 
-    function handlingLikeBtn(){
-        console.log(${post.title})
+    const postId = [[${post.id}]];
+    const liked = [[${liked}]];
+    const currLikes = [[${post.postLikesCount}]];
+    let selectedCommentOrder = -1;
+
+    function handleLikeBtn(e){
+        fetch("/like/" + postId,{
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json",
+            }
+        })
+            .then((response) =>
+                response.json())
+            .then((data) => {
+                console.log(data);
+                alert(data.message);
+                if(!liked){
+                    let likeCount = document.getElementById('likeCount');
+                    likeCount.innerHTML = currLikes + 1;
+                }
+            })
+            .catch((e=>{
+                alert(e);
+            }))
+        e.preventDefault();
+    }
+
+    function checkDelete(){
+        if(confirm("글을 삭제하시겠습니까?")){
+            confirmDelete();
+        }else{
+            return;
+        }
+    }
+
+    function confirmDelete(){
+        fetch("/api/posts/delete/" + postId,{
+            method: "DELETE",
+            headers:{
+                "Content-Type": "application/json",
+            }
+        })
+            .then((response) =>{
+                history.go(-1);
+                response.json()})
+            .catch((e=>{
+                alert(e);
+            }))
+    }
+
+    function addComment(){
+        let commentInput = document.getElementById('commentInput').value;
+        let data = {
+            post_id : postId,
+            content : commentInput,
+            parentCommentNum : selectedCommentOrder,
+        };
+        fetch("/api/comments",{
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+            .then((response) => {
+                alert('댓글이 등록되었습니다.');
+                window.location.href = '/api/v1/posts/'+postId;
+            })
+            .catch((e=>{
+                alert(e);
+            }))
+    }
+
+
+    const replyInputBox= document.getElementById('commentInput');
+    function commentReply(commentOrder){
+        replyInputBox.placeholder = "대댓글을 입력하세요.";
+        replyInputBox.focus();
+
+        const commentAddCancelBtn = document.getElementById('commentAddCancelBtn')
+        commentAddCancelBtn.classList.add('visible')
+
+
+        commentAddBtn = document.getElementById('commentAddBtn');
+        selectedCommentOrder = commentOrder;
+        const boxId = "articleBox" + '-' + commentOrder
+        const articleBox = document.getElementById(boxId)
+        articleBox.classList.add('active');
+    }
+
+    function replyCancel(btn){
+        selectedCommentOrder = -1;
+        const activeComment = document.getElementsByClassName('active');
+        for(let i = 0; i < activeComment.length; i++){
+            activeComment[i].classList.remove('active');
+        }
+        replyInputBox.placeholder = "댓글을 입력하세요.";
+        btn.classList.remove('visible');
+
     }
     /*]]>*/
 </script>
+
+
 </body>
 </html>
