@@ -46,8 +46,8 @@ public class IndexController {
     // 홈화면
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user){
+        System.out.println("홈화면");
         List<PostsListResponseDto> postList = postsService.findAllDesc();
-        System.out.println("postList.size() = " + postList.size());
         model.addAttribute("postList", postList);
         model.addAttribute("categoryList", categoryService.findAll());
         if(user != null){
@@ -59,8 +59,10 @@ public class IndexController {
     // 로그인 화면
     @GetMapping("/login")
     public String login(){
+        System.out.println("getmapping");
         return "login";
     }
+
 
     // 마이페이지 화면
     @GetMapping("/mypage")
@@ -109,6 +111,7 @@ public class IndexController {
         comments.sort(Comparator.comparing(CommentResponseDto::getParentCommentNum)
                 .thenComparing(orderComparator));
 
+        model.addAttribute("commentsCount", comments.size());
         model.addAttribute("comments", comments);
 
         // 유저가 이미 좋아요를 눌렀는지 전달

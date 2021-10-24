@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/posts.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/post-detail.css}">
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
 </head>
 <body>
@@ -43,7 +44,6 @@
                     </li>
                     <li th:each="category : ${categoryList}" class = "sidebar-dropdown">
                         <a th:href = "@{|/api/v1/posts/category/${category.id}|}">
-                            <i class="fa fa-globe"></i>
                             <span th:text="${category.name}"></span>
                         </a>
                     </li>
@@ -55,7 +55,7 @@
     <!-- page-content" -->
 
     <div id="container">
-        <div class="wrap title" th:text="${categoryName}">전체 글</div>
+        <div class="wrap title" th:text="${categoryName}"></div>
         <div class="wrap articles">
             <article th:each="post : ${postList}">
                 <a class = "article" th:href = "@{/api/v1/posts/{id}(id = ${post.id})}">
@@ -65,9 +65,8 @@
                         <time class = "small">방금</time>
                         <h3 class ="small" th:text="${post.user.name}"></h3>
                         <ul class = "status">
-                            <li class="view" th:text="${post.viewCount}"></li>
-                            <li class="like" th:text="${post.postLikesCount}"></li>
-                            <li class="comment">0</li>
+                            <li class="vote" th:text="${post.postLikesCount}"></li>
+                            <li class="comment" th:text="${post.commentCount}"></li>
                         </ul>
                     </div>
 

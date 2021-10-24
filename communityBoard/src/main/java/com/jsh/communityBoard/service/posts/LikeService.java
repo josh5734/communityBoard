@@ -38,6 +38,7 @@ public class LikeService {
     public boolean isAlreadyLike(User user, Post post) {
         return postLikeRepository.findByUserAndPost(user, post).isPresent();
     }
+
     //사용자가 이미 좋아요 한 게시물인지 체크 - User, Post 아이디로 찾기
     public boolean isAlreadyLike(Long user_id, Long post_id) {
         return postLikeRepository.findByUserIdAndPostId(user_id, post_id).isPresent();

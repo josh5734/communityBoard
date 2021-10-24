@@ -44,7 +44,6 @@
                     </li>
                     <li th:each="category : ${categoryList}" class = "sidebar-dropdown">
                         <a th:href = "@{|/api/v1/posts/category/${category.id}|}">
-                            <i class="fa fa-globe"></i>
                             <span th:text="${category.name}"></span>
                         </a>
                     </li>
@@ -75,7 +74,7 @@
                     <p class="large" th:text="${post.content}"></p>
                     <ul class="status left">
                         <li class="vote" id = "likeCount" th:text="${post.postLikesCount}"></li>
-                        <li class="comment">0</li>
+                        <li class="comment" th:text="${commentsCount}"></li>
                         <li class="scrap">0</li>
                     </ul>
                     <hr>
@@ -105,7 +104,7 @@
                     <form class ="writecomment">
                         <input type="text" maxlength="300" autocomplete="off" placeholder="댓글을 입력하세요." class="text" id = "commentInput">
                         <ul id = "commentInputOption" class = "option">
-                            <li title="취소" id = "commentAddCancelBtn" class="cancel" th:onclick="|javascript:replyCancel(this)|">취소</li>
+                            <li title="취소" id = "commentAddCancelBtn" class="cancel" th:onclick="|javascript:resetByCancel(this)|">취소</li>
                             <li title="완료" id = "commentAddBtn" class="submit" th:onclick="|javascript:addComment()|"></li>
                         </ul>
                     </form>
@@ -139,7 +138,6 @@
             .then((response) =>
                 response.json())
             .then((data) => {
-                console.log(data);
                 alert(data.message);
                 if(!liked){
                     let likeCount = document.getElementById('likeCount');
@@ -201,12 +199,12 @@
 
     const replyInputBox= document.getElementById('commentInput');
     function commentReply(commentOrder){
+        resetByOtherComment();
         replyInputBox.placeholder = "대댓글을 입력하세요.";
         replyInputBox.focus();
 
         const commentAddCancelBtn = document.getElementById('commentAddCancelBtn')
         commentAddCancelBtn.classList.add('visible')
-
 
         commentAddBtn = document.getElementById('commentAddBtn');
         selectedCommentOrder = commentOrder;
@@ -215,15 +213,25 @@
         articleBox.classList.add('active');
     }
 
-    function replyCancel(btn){
+    function resetByCancel(btn){
         selectedCommentOrder = -1;
         const activeComment = document.getElementsByClassName('active');
         for(let i = 0; i < activeComment.length; i++){
             activeComment[i].classList.remove('active');
         }
+        replyInputBox.value = null;
         replyInputBox.placeholder = "댓글을 입력하세요.";
         btn.classList.remove('visible');
+    }
 
+    function resetByOtherComment(){
+        selectedCommentOrder = -1;
+        const activeComment = document.getElementsByClassName('active');
+        for(let i = 0; i < activeComment.length; i++){
+            activeComment[i].classList.remove('active');
+        }
+        replyInputBox.value = null;
+        replyInputBox.placeholder = "댓글을 입력하세요.";
     }
     /*]]>*/
 </script>

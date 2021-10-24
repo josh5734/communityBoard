@@ -80,10 +80,15 @@ public class PostsService {
     // 모든 포스트 조회
     @Transactional(readOnly = true)
     public List<PostsListResponseDto> findAllDesc(){
-        return postsRepository.findAllDesc();
+        List<PostsListResponseDto> postsList = postsRepository.findAllDesc();
+        for(PostsListResponseDto p : postsList){
+            p.adjustCreatedTime();
+        }
+        return postsList;
     }
 
 
+    // 조회 수 증가
     public void increaseViewCount(Long id) {
         Optional<Post> post = postsRepository.findById(id);
         if(post.isPresent()){
@@ -91,4 +96,5 @@ public class PostsService {
         }
         postsRepository.save(post.get());
     }
+
 }

@@ -38,10 +38,10 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<PostLike> postLikes = new ArrayList<>(); // 좋아요 리스트
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Comment> commentList = new ArrayList<>(); // 댓글 리스트
 
     public Post createPost(User user, Category category, String title, String content){

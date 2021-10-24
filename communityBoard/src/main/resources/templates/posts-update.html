@@ -47,7 +47,6 @@
                     </li>
                     <li th:each="category : ${categoryList}" class = "sidebar-dropdown">
                         <a th:href = "@{|/api/v1/posts/category/${category.id}|}">
-                            <i class="fa fa-globe"></i>
                             <span th:text="${category.name}"></span>
                         </a>
                     </li>
