@@ -273,25 +273,41 @@ a:-webkit-any-link {
     width: 465px;
     height :48px;
     font-size: 18px;
-    background: var(--naver-green-color);
+    border-color: #0078FF;
+    background-color: #0078FF;
     color: white;
-    border: solid 1px var(--naver-green-border-color);
 }
 .login-stay-sign-in{
     width: 465px;
     height: 52px;
-
     display: flex;
     font-size: 15px;
     color: #4e4e4e;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     border-bottom: solid 1px var(--border-gray-color);
 }
+.login-stay-sign-in div{
+    display: flex;
+    align-items: center;
+}
+
+.login-stay-sign-in i:hover{
+    color: #9ba1a3;
+    font-size: 23px;
+}
+
+
 .login-stay-sign-in i{
-    font-size: 25px;
+    font-size: 22px;
     color: #9ba1a3;
 }
+
+.selected {
+    color: #0078FF !important;
+}
+
+
 .login-stay-sign-in span{
     padding-left: 5px;
     line-height: 25px;
@@ -309,26 +325,19 @@ a:-webkit-any-link {
 }
 .Easy-sgin-in-wrap .sign-button-list
 {
-    padding-top:25px;
+    padding-top:15px;
     list-style: none;
     width: 465px;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
+
 .Easy-sgin-in-wrap .sign-button-list li{
     padding-bottom: 10px;
 }
-.Easy-sgin-in-wrap .sign-button-list li button{
-    width: 465px;
-    height: 56px;
-    border: solid 1px var(--border-gray-color);
-    text-align: left;
-    background: white;
-}
-.Easy-sgin-in-wrap .sign-button-list li button i{
-    padding-left: 15px;
-    font-size: 20px;
+.Easy-sgin-in-wrap .sign-button-list img{
+    width:230px;
 }
 .fa-qrcode
 {

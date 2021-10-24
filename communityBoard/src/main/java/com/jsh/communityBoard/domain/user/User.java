@@ -6,20 +6,23 @@ import com.jsh.communityBoard.domain.posts.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@NoArgsConstructor
-@Entity
+@Getter @NoArgsConstructor @Entity
 public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="USER_ID")
     private Long id;
+
+    @Column
+    private String loginId;
+
+    @Column
+    private String password;
 
     @Column(nullable = false)
     private String name;
