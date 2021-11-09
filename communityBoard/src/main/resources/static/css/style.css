@@ -339,6 +339,15 @@ a:-webkit-any-link {
 .Easy-sgin-in-wrap .sign-button-list img{
     width:230px;
 }
+
+
+.login-options{
+    display: flex;
+}
+.login-options li{
+    margin-right: 5px;
+}
+
 .fa-qrcode
 {
     color:var(--naver-green-color);

@@ -1,18 +1,44 @@
 <!doctype HTML>
 <head>
     <meta charset="UTF-8">
-    <title>Community Board</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <script src="https://kit.fontawesome.com/bdfd7f14f2.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <script src="https://kit.fontawesome.com/51db22a717.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/posts.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/post-detail.css}">
+    <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
+<!--    <script src="https://kit.fontawesome.com/51db22a717.js" crossorigin="anonymous"></script>-->
 </head>
 <body>
 <div class="main-container">
+<!--    <form class="login-form" action="/doLogin" method="POST">-->
+<!--        <input type ="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+<!--        <div class="row">-->
+<!--            <div class="input-field col s12">-->
+<!--                <input id="loginId" type="loginId" name="loginId" class="validate"/>-->
+<!--                <label for="loginId">Email</label>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="input-field col s12">-->
+<!--                <input id="password" type="password" name="password" class="validate"/>-->
+<!--                <label for="password">Password</label>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <input class="login-btn waves-effect waves-light btn" type="submit" value="로그인" />-->
+<!--    </form>-->
     <div class="main-wrap">
         <header>
             <div class="logo-wrap">
-                <h2>Community Board</h2>
+                <h2>개발자 모여라</h2>
             </div>
         </header>
+
         <section class="login-input-section-wrap">
             <div class="login-input-wrap">
                 <input id = "loginForm-id" placeholder="아이디 입력" type="text"></input>
@@ -28,7 +54,10 @@
                     <div id = "stayBtn" th:onclick="|javascript:loginStayHandler()|"><i class="far fa-check-circle"></i></div>
                     <span>로그인 유지</span>
                 </div>
-                <p class="forget-msg">비밀번호 찾기 | 회원가입</p>
+                <ul class = "login-options">
+                    <li class="" ><a th:href="@{/signup.html}">비밀번호 찾기</a></li>
+                    <li class="" ><a th:href="@{/signup.html}">회원 가입</a></li>
+                </ul>
             </div>
         </section>
         <section class="Easy-sgin-in-wrap">
@@ -97,7 +126,4 @@
 
     /*]]>*/
 </script>
-
-
-
 </body>

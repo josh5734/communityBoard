@@ -30,6 +30,7 @@ public class Comment extends BaseTimeEntity {
 
     private long parentCommentNum; // 자신이 속한 원댓글의 번호
     private long commentOrder; // 자신의 댓글 번호
+    private long childCommentCount; // 자식 댓글의 개수
 
     private boolean isDeleted; // 댓글 삭제 여부
 
@@ -43,13 +44,14 @@ public class Comment extends BaseTimeEntity {
         this.content = content;
         this.likeCount = 0;
         this.hateCount = 0;
+        this.childCommentCount = 0;
+        this.isDeleted = false;
         this.parentCommentNum = parentCommentNum;
         this.commentOrder = commentOrder;
         this.user.getCommentList().add(this);
         this.post.getCommentList().add(this);
         return this;
     }
-
 
     // 댓글 수정
     public void update(String content){
@@ -63,5 +65,11 @@ public class Comment extends BaseTimeEntity {
     public void setPost(Post post){
         this.post = post;
     }
+
+    public void setDeleted(){
+        this.isDeleted = true;
+    }
+    public void plusChildCommentCount(){this.childCommentCount++;}
+    public void minusChildCommentCount(){this.childCommentCount--;}
 
 }

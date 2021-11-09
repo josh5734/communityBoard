@@ -12,6 +12,7 @@ import com.jsh.communityBoard.domain.user.UserRepository;
 import com.jsh.communityBoard.web.dto.CommentDto;
 import com.jsh.communityBoard.web.dto.CommentResponseDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +21,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class CommentService {
     private final UserRepository userRepository;
     private final PostsRepository postsRepository;
     private final CommentRepository commentRepository;
-
 
     @Transactional
     public Long save(CommentDto commentDto, @LoginUser SessionUser user) {
@@ -35,16 +36,36 @@ public class CommentService {
         if(p.isPresent()) commentDto.setPost(p.get());
 
         commentDto.setCommentOrder(commentRepository.getMaximumCommentOrder() + 1);
-        System.out.println("commentDto.getParentCommentNum() = " + commentDto.getParentCommentNum());
 
         // 부모 댓글은 부모 번호를 자신의 댓글 번호로 한다.
         if(commentDto.getParentCommentNum() == -1){
-            System.out.println("Parent Comment");
             commentDto.setParentCommentNum(commentDto.getCommentOrder());
-            System.out.println("commentDto.getParentCommentNum() = " + commentDto.getParentCommentNum());
+            log.info("부모 댓글을 생성합니다. parentCommentNum = {}", commentDto.getCommentOrder());
+        }else{
+            long parentCommentNum = commentDto.getParentCommentNum();
+            // 자식 댓글이라면, 부모 댓글의 자식 수를 증가시킨다.
+            Comment parentComm = commentRepository.findByCommentOrder(parentCommentNum);
+            parentComm.plusChildCommentCount();
+            log.info("자식 댓글을 생성합니다. parentCommentNum = {}, parentChildCommentCount = {}", parentComm.getParentCommentNum(), parentComm.getChildCommentCount());
         }
         return commentRepository.save(commentDto.toEntity()).getId();
     }
 
+    // 삭제
+    @Transactional
+    public void delete(Long id){
+        Comment comment = commentRepository.findById(id).get();
+        // 자식 댓글을 삭제하면 부모 댓글의 자식 숫자를 감소시킨다.
+        if (comment.getCommentOrder() != comment.getParentCommentNum()) {
+            Comment parentComm = commentRepository.findByCommentOrder(comment.getParentCommentNum());
+            parentComm.minusChildCommentCount();
+        }
+        commentRepository.delete(comment);
+        log.info("자식 댓글을 삭제합니다.");
+    }
 
+    public void deletedUpdate(Long id){
+        Comment comment = commentRepository.findById(id).get();
+        comment.setDeleted();
+    }
 }

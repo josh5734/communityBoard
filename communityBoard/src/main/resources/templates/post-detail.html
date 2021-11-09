@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CommunityBoard</title>
+    <title>개발자 모여라</title>
     <script src="https://kit.fontawesome.com/bdfd7f14f2.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,9 +64,9 @@
                         <time class= "large">방금</time>
                     </div>
 
-                    <ul class = "status">
+                    <ul class = "status" th:if="${userName == post.user.name}">
                         <li class="update" th:onclick="|location.href='@{/posts/update/{id}(id=${post.id})}'|">수정</li>
-                        <li class="del" th:onclick="|javascript:checkDelete()|">삭제</li>
+                        <li class="del" th:onclick="|javascript:checkDeletePost()|">삭제</li>
                     </ul>
 
                     <h2 class="large post-title" th:text="${post.title}"></h2>
@@ -91,14 +91,14 @@
                             <h3 class="medium" th:text="${comment.writer}"></h3>
                             <time class= "medium">방금</time>
                         </div>
-                        <ul class = "status">
+                        <ul class = "status" th:unless="${comment.isDeleted}">
                             <li th:if="${comment.commentOrder == comment.parentCommentNum}" class = "childcomment" th:onclick="|javascript:commentReply(${comment.commentOrder})|">대댓글</li>
                             <li class = "commentvote">공감</li>
-                            <li class = "abuse">신고</li>
+                            <li th:if="${comment.writer == userName}" class = "delete" th:onclick="|javascript:checkDeleteComment(${comment.commentOrder},${comment.parentCommentNum}, ${comment.childCommentCount}, ${comment.id})|">삭제</li>
                         </ul>
                         <hr>
-                        <p class = "large" th:text="${comment.content}"></p>
-
+                        <p class = "large" th:if="${comment.isDeleted}">삭제된 메시지입니다.</p>
+                        <p class = "large" th:unless="${comment.isDeleted}" th:text="${comment.content}"></p>
                     </article>
 
                     <form class ="writecomment">
@@ -150,15 +150,23 @@
         e.preventDefault();
     }
 
-    function checkDelete(){
+    function checkDeletePost(){
         if(confirm("글을 삭제하시겠습니까?")){
-            confirmDelete();
+            confirmDeletePost();
         }else{
             return;
         }
     }
 
-    function confirmDelete(){
+    function checkDeleteComment(order, parentNum, childCommentCount, id){
+        if(confirm("댓글을 삭제하시겠습니까?")){
+            confirmDeleteComment(order, parentNum, childCommentCount, id);
+        }else{
+            return;
+        }
+    }
+
+    function confirmDeletePost(){
         fetch("/api/posts/delete/" + postId,{
             method: "DELETE",
             headers:{
@@ -171,6 +179,59 @@
             .catch((e=>{
                 alert(e);
             }))
+    }
+
+    function confirmDeleteComment(order, parentNum, childCommentCount, id){
+        // 부모 댓글인 경우
+        if(order === parentNum){
+            if(childCommentCount == 0){ // 자식 댓글이 없으면 그냥 삭제
+                console.log("1234");
+                fetch("/api/comments/" + id,{
+                    method: "DELETE",
+                    headers:{
+                        "Content-Type": "application/json",
+                    }
+                })
+                    .then((response) => {
+                        window.location.href = '/api/v1/posts/'+postId;
+                        // response.json()})
+                    })
+                    .catch((e=>{
+                        alert(e);
+                    }))
+            }else{ // 자식 댓글이 있으면 (삭제된 메시지입니다.)로 표시해야 함
+                console.log("자식이 있는 댓글을 삭제합니다.");
+                fetch("/api/comments/" + id,{
+                    method: "PUT",
+                    headers:{
+                        "Content-Type": "application/json",
+                    }
+                })
+                    .then((response) => {
+                        window.location.href = '/api/v1/posts/'+postId;
+
+                        // window.location.href = '/api/v1/posts/'+postId;
+                        // response.json()})
+                    })
+                    .catch((e=>{
+                        alert(e);
+                    }))
+            }
+        }else{
+            fetch("/api/comments/" + id,{
+                method: "DELETE",
+                headers:{
+                    "Content-Type": "application/json",
+                }
+            })
+                .then((response) => {
+                    window.location.href = '/api/v1/posts/'+postId;
+                    // response.json()})
+                })
+                .catch((e=>{
+                    alert(e);
+                }))
+        }
     }
 
     function addComment(){

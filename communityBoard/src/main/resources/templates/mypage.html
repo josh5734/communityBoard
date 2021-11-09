@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CommunityBoard</title>
+    <title>개발자 모여라</title>
     <script src="https://kit.fontawesome.com/bdfd7f14f2.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,20 +40,22 @@
     </div>
     <div class="summaryContainer">
         <div class="item">
-            <a th:href = "@{/api/posts/userWritten/{id}(id = ${userId})}">
+            <a th:href = "@{/mypost}">
                 <div class="number" th:text="${postCount}"></div>
                 <div>내가 쓴 게시물</div>
             </a>
         </div>
         <div class="item">
-            <a th:href = "@{/api/posts/liked/{id}(id = ${userId})}">
+            <a th:href = "@{/mylikepost}">
                 <div class="number" th:text="${likeCount}"></div>
                 <div>좋아요를 누른 게시물</div>
             </a>
         </div>
         <div class="item">
-            <div class="number" th:text="${commentCount}"></div>
-            <div>댓글을 작성한 게시물</div>
+            <a th:href = "@{/mycommentpost}">
+                <div class="number" th:text="${commentCount}"></div>
+                <div>댓글을 작성한 게시물</div>
+            </a>
         </div>
     </div>
 

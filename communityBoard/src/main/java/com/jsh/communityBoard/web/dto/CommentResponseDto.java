@@ -10,6 +10,8 @@ public class CommentResponseDto {
     private String writer;
     private long parentCommentNum;
     private long commentOrder;
+    private boolean isDeleted;
+    private long childCommentCount;
 
 
     public CommentResponseDto(Comment comment) {
@@ -18,5 +20,7 @@ public class CommentResponseDto {
         this.writer = comment.getUser().getName();
         this.parentCommentNum = comment.getParentCommentNum();
         this.commentOrder = comment.getCommentOrder();
+        this.childCommentCount = comment.getChildCommentCount();
+        this.isDeleted = comment.isDeleted();
     }
 }

@@ -13,13 +13,11 @@ public class CommentDto {
     private Long post_id;
     private Post post;
     private User user;
-
     private String content;
     private long parentCommentNum;
     private long commentOrder;
-
-
-
+    private long childCommentCount;
+    private boolean isDeleted;
 
     public Comment toEntity(){
         Comment comment = new Comment();

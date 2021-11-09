@@ -3,11 +3,9 @@ package com.jsh.communityBoard.web;
 
 import com.jsh.communityBoard.config.auth.LoginUser;
 import com.jsh.communityBoard.config.auth.dto.SessionUser;
-import com.jsh.communityBoard.domain.category.Category;
 import com.jsh.communityBoard.domain.category.CategoryRepository;
-import com.jsh.communityBoard.domain.comment.Comment;
+import com.jsh.communityBoard.domain.comment.CommentRepository;
 import com.jsh.communityBoard.domain.like.PostLikeRepository;
-import com.jsh.communityBoard.domain.posts.Post;
 import com.jsh.communityBoard.domain.posts.PostsRepository;
 import com.jsh.communityBoard.domain.user.User;
 import com.jsh.communityBoard.domain.user.UserRepository;
@@ -18,35 +16,35 @@ import com.jsh.communityBoard.service.posts.PostsService;
 import com.jsh.communityBoard.web.dto.CommentResponseDto;
 import com.jsh.communityBoard.web.dto.PostsListResponseDto;
 import com.jsh.communityBoard.web.dto.PostsResponseDto;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Controller
+@Slf4j
 public class IndexController {
     private final PostsService postsService;
     private final CategoryService categoryService;
     private final LikeService likeService;
-    private final PostLikeRepository postLikeRepository;
-    private final UserRepository userRepository;
-    private final PostsRepository postsRepository;
-    private final CategoryRepository categoryRepository;
     private final CommentService commentService;
+    private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
+    private final PostsRepository postsRepository;
+    private final CommentRepository commentRepository;
 
 
     // 홈화면
     @GetMapping("/")
     public String index(Model model, @LoginUser SessionUser user){
-        System.out.println("홈화면");
         List<PostsListResponseDto> postList = postsService.findAllDesc();
         model.addAttribute("postList", postList);
         model.addAttribute("categoryList", categoryService.findAll());
@@ -59,10 +57,8 @@ public class IndexController {
     // 로그인 화면
     @GetMapping("/login")
     public String login(){
-        System.out.println("getmapping");
         return "login";
     }
-
 
     // 마이페이지 화면
     @GetMapping("/mypage")
@@ -152,8 +148,9 @@ public class IndexController {
     }
 
     // 유저가 쓴 게시물 조회
-    @GetMapping("/api/posts/userWritten/{userId}")
-    public String findByUser(@PathVariable Long userId, Model model, @LoginUser SessionUser user){
+    @GetMapping("/mypost")
+    public String findByUser(Model model, @LoginUser SessionUser user){
+        Long userId = user.getId();
         model.addAttribute("postList", postsService.findByUser(userId));
         model.addAttribute("categoryList", categoryService.findAll());
         if(user != null){
@@ -163,25 +160,30 @@ public class IndexController {
     }
     
     // 유저가 좋아요를 누른 게시물 조회
-    @GetMapping("/api/posts/liked/{userId}")
-    public String userLikedPosts(@PathVariable Long userId, Model model, @LoginUser SessionUser user){
-        System.out.println("userId = " + userId);
+    @GetMapping("/mylikepost")
+    public String userLikedPosts(Model model, @LoginUser SessionUser user){
+        Long userId = user.getId();
         model.addAttribute("postList", likeService.findByUser(userId));
         model.addAttribute("categoryList", categoryService.findAll());
-
-        
-        List<PostsListResponseDto> dto = likeService.findByUser(userId);
-        for(PostsListResponseDto x : dto){
-            System.out.println("x.getId() = " + x.getId());
-        }
-        
-        
-        
         if(user != null){
             model.addAttribute("userName", user.getName());
         }
         return "user-liked-posts";
     }
 
+    // 유저가 댓글을 단 게시물 조회
+    @GetMapping("/mycommentpost")
+    public String userCommentPosts(Model model, @LoginUser SessionUser user){
+        Long userId = user.getId();
+        List<Long> userCommentPostId = commentRepository.findByUserId(userId);
+        List<PostsListResponseDto> postList = userCommentPostId.stream()
+                .map(id -> postsRepository.findByPostId(id)).collect(Collectors.toList());
 
+        model.addAttribute("postList", postList);
+        model.addAttribute("categoryList", categoryService.findAll());
+        if(user != null){
+            model.addAttribute("userName", user.getName());
+        }
+        return "user-comment-posts";
+    }
 }

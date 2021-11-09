@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.charset.Charset;
@@ -26,10 +27,9 @@ public class LikeApiController {
     private final LikeService likeService;
     private final UserRepository userRepository;
 
-
     // 좋아요 눌렀을 때
     @PostMapping("/like/{postId}")
-    public ResponseEntity<Message> updateLike(@LoginUser SessionUser user, @PathVariable Long postId) {
+    public ResponseEntity<Message> updateLike(@PathVariable Long postId, @LoginUser SessionUser user) {
         boolean result = false;
         Message message = new Message();
         HttpHeaders headers = new HttpHeaders();
