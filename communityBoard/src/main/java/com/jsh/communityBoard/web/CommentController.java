@@ -1,8 +1,6 @@
 package com.jsh.communityBoard.web;
 import com.jsh.communityBoard.config.auth.LoginUser;
 import com.jsh.communityBoard.config.auth.dto.SessionUser;
-import com.jsh.communityBoard.domain.posts.PostsRepository;
-import com.jsh.communityBoard.domain.user.UserRepository;
 import com.jsh.communityBoard.service.posts.CommentService;
 import com.jsh.communityBoard.web.dto.CommentDto;
 import lombok.RequiredArgsConstructor;

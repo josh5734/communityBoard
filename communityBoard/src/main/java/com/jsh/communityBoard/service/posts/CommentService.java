@@ -10,15 +10,12 @@ import com.jsh.communityBoard.domain.posts.PostsRepository;
 import com.jsh.communityBoard.domain.user.User;
 import com.jsh.communityBoard.domain.user.UserRepository;
 import com.jsh.communityBoard.web.dto.CommentDto;
-import com.jsh.communityBoard.web.dto.CommentResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -30,7 +27,7 @@ public class CommentService {
 
     @Transactional
     public Long save(CommentDto commentDto, @LoginUser SessionUser user) {
-        Optional<User> u = userRepository.findByName(user.getName());
+        Optional<User> u = userRepository.findByNickname(user.getNickname());
         Optional<Post> p = postsRepository.findById(commentDto.getPost_id());
         if(u.isPresent()) commentDto.setUser(u.get());
         if(p.isPresent()) commentDto.setPost(p.get());

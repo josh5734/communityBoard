@@ -5,15 +5,12 @@ import com.jsh.communityBoard.domain.like.PostLikeRepository;
 import com.jsh.communityBoard.domain.posts.Post;
 import com.jsh.communityBoard.domain.posts.PostsRepository;
 import com.jsh.communityBoard.domain.user.User;
-import com.jsh.communityBoard.web.dto.PostLikeDto;
 import com.jsh.communityBoard.web.dto.PostsListResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Transactional
 @RequiredArgsConstructor

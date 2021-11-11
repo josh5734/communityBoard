@@ -11,11 +11,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * During the Login Process, email account returned.
      * By this Email, check weather the user has benn already created or not.
      */
-    Optional<User> findByEmail(String email);
+    Optional<User> findByUsername(String username);
+    Optional<User> findByEmail(String username);
+    Optional<User> findByNickname(@Param(value = "name") String nickname);
 
-    @Query("SELECT u from User u where u.name = :name")
-    Optional<User> findByName(@Param(value = "name") String name);
-
-    @Query("SELECT u from User u where u.loginId = :loginId")
-    Optional<User> findByLoginId(@Param(value = "loginId") String loginId);
 }

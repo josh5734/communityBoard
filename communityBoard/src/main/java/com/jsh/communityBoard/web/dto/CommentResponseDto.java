@@ -17,7 +17,7 @@ public class CommentResponseDto {
     public CommentResponseDto(Comment comment) {
         this.id = comment.getId();
         this.content = comment.getContent();
-        this.writer = comment.getUser().getName();
+        this.writer = comment.getUser().getNickname();
         this.parentCommentNum = comment.getParentCommentNum();
         this.commentOrder = comment.getCommentOrder();
         this.childCommentCount = comment.getChildCommentCount();

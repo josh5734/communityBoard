@@ -24,7 +24,7 @@ public class PostsApiController {
     // 등록 API
     @PostMapping("/api/v1/posts")
     public ResponseEntity<Long> save(@RequestBody PostsSaveRequestDto requestsDto, @LoginUser SessionUser user){
-        requestsDto.setUser(user.getName());
+        requestsDto.setUser(user.getNickname());
         Long id = postsService.save(requestsDto);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }

@@ -3,7 +3,6 @@ package com.jsh.communityBoard.service.posts;
 
 import com.jsh.communityBoard.domain.category.Category;
 import com.jsh.communityBoard.domain.category.CategoryRepository;
-import com.jsh.communityBoard.domain.like.PostLike;
 import com.jsh.communityBoard.domain.posts.Post;
 import com.jsh.communityBoard.domain.posts.PostsRepository;
 import com.jsh.communityBoard.domain.user.User;
@@ -14,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -29,7 +26,7 @@ public class PostsService {
     // 등록
     @Transactional
     public Long save(PostsSaveRequestDto requestDto){
-        Optional<User> user = userRepository.findByName(requestDto.getUser_name());
+        Optional<User> user = userRepository.findByNickname(requestDto.getUserNickname());
         Optional<Category> category = categoryRepository.findById(requestDto.getCategory_id());
         if(user.isPresent()){
             requestDto.setUser(user.get());

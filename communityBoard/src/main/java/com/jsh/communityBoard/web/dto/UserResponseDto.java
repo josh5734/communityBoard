@@ -13,7 +13,7 @@ public class UserResponseDto {
     String picture;
     Role role;
     public UserResponseDto(User entity){
-        this.name = entity.getName();
+        this.name = entity.getNickname();
         this.email = entity.getEmail();
         this.picture = entity.getPicture();
         this.role = entity.getRole();

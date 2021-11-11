@@ -80,7 +80,7 @@ public class PostsApiControllerTest {
     @Test
     @WithMockUser(roles="USER")
     public void 게시물등록() throws Exception{
-        User user = userRepository.save(User.builder().name("sh").email("josh5734@naver.com").picture("no").role(Role.USER).build());
+        User user = userRepository.save(User.builder().nickname("sh").email("josh5734@naver.com").picture("no").role(Role.USER).build());
         Category category = categoryRepository.save(new Category("자유게시판"));
 
 
@@ -98,7 +98,7 @@ public class PostsApiControllerTest {
 
     @Test
     public void 유저아이디로게시물조회() throws Exception{
-        User user = userRepository.save(User.builder().name("sh").email("josh5734@naver.com").picture("no").role(Role.USER).build());
+        User user = userRepository.save(User.builder().nickname("sh").email("josh5734@naver.com").picture("no").role(Role.USER).build());
         Long userId = user.getId();
         Category category = categoryRepository.save(new Category("자유게시판"));
 
@@ -119,8 +119,8 @@ public class PostsApiControllerTest {
 
     @Test
     public void 전체게시물조회() throws Exception{
-        User user1 = userRepository.save(User.builder().name("sh").email("josh5734@naver.com").picture("no").role(Role.USER).build());
-        User user2 = userRepository.save(User.builder().name("xy").email("abcdefg@naver.com").picture("no").role(Role.USER).build());
+        User user1 = userRepository.save(User.builder().nickname("sh").email("josh5734@naver.com").picture("no").role(Role.USER).build());
+        User user2 = userRepository.save(User.builder().nickname("xy").email("abcdefg@naver.com").picture("no").role(Role.USER).build());
         Category category1 = categoryRepository.save(new Category("자유게시판"));
         Category category2 = categoryRepository.save(new Category("홍보게시판"));
 
@@ -140,7 +140,7 @@ public class PostsApiControllerTest {
 
     @Test
     public void 카테고리로조회하기() throws Exception{
-        User user1 = userRepository.save(User.builder().name("sh").email("josh5734@naver.com").picture("no").role(Role.USER).build());
+        User user1 = userRepository.save(User.builder().nickname("sh").email("josh5734@naver.com").picture("no").role(Role.USER).build());
         Category category1 = categoryRepository.save(new Category("자유게시판"));
         Category category2 = categoryRepository.save(new Category("홍보게시판"));
 
@@ -162,7 +162,7 @@ public class PostsApiControllerTest {
     @Test
     @WithMockUser(roles="USER")
     public void 게시물수정하기() throws Exception{
-        User user = userRepository.save(User.builder().name("sh").email("josh5734@naver.com").picture("no").role(Role.USER).build());
+        User user = userRepository.save(User.builder().nickname("sh").email("josh5734@naver.com").picture("no").role(Role.USER).build());
         Category category = categoryRepository.save(new Category("자유게시판"));
         Long postId = postsRepository.save(new Post().createPost(user, category, "title2", "content2")).getId();
 
@@ -192,7 +192,7 @@ public class PostsApiControllerTest {
     @WithMockUser(roles="USER")
     public void 게시물삭제하기() throws Exception{
         // 게시글 생성
-        User user = userRepository.save(User.builder().name("sh").email("josh5734@naver.com").picture("no").role(Role.USER).build());
+        User user = userRepository.save(User.builder().nickname("sh").email("josh5734@naver.com").picture("no").role(Role.USER).build());
         Category category = categoryRepository.save(new Category("자유게시판"));
         Long postId = postsRepository.save(new Post().createPost(user, category, "title2", "content2")).getId();
 

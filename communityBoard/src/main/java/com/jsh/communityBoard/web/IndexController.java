@@ -5,12 +5,10 @@ import com.jsh.communityBoard.config.auth.LoginUser;
 import com.jsh.communityBoard.config.auth.dto.SessionUser;
 import com.jsh.communityBoard.domain.category.CategoryRepository;
 import com.jsh.communityBoard.domain.comment.CommentRepository;
-import com.jsh.communityBoard.domain.like.PostLikeRepository;
 import com.jsh.communityBoard.domain.posts.PostsRepository;
 import com.jsh.communityBoard.domain.user.User;
 import com.jsh.communityBoard.domain.user.UserRepository;
 import com.jsh.communityBoard.service.posts.CategoryService;
-import com.jsh.communityBoard.service.posts.CommentService;
 import com.jsh.communityBoard.service.posts.LikeService;
 import com.jsh.communityBoard.service.posts.PostsService;
 import com.jsh.communityBoard.web.dto.CommentResponseDto;
@@ -22,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Comparator;
 import java.util.List;
@@ -35,7 +32,6 @@ public class IndexController {
     private final PostsService postsService;
     private final CategoryService categoryService;
     private final LikeService likeService;
-    private final CommentService commentService;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final PostsRepository postsRepository;
@@ -49,7 +45,7 @@ public class IndexController {
         model.addAttribute("postList", postList);
         model.addAttribute("categoryList", categoryService.findAll());
         if(user != null){
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("userName", user.getNickname());
         }
         return "index";
     }
@@ -58,6 +54,12 @@ public class IndexController {
     @GetMapping("/login")
     public String login(){
         return "login";
+    }
+
+    // 로그인 화면
+    @GetMapping("/signup")
+    public String signup(){
+        return "signup";
     }
 
     // 마이페이지 화면
@@ -76,7 +78,7 @@ public class IndexController {
 
         if(user != null){
             model.addAttribute("userId", user.getId());
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("userName", user.getNickname());
         }
         return "mypage";
     }
@@ -86,7 +88,7 @@ public class IndexController {
     public String postsSave(Model model, @LoginUser SessionUser user) {
         model.addAttribute("categoryList", categoryService.findAll());
         if(user != null){
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("userName", user.getNickname());
             model.addAttribute("user", user);
         }
         return "posts-save";
@@ -114,7 +116,7 @@ public class IndexController {
         model.addAttribute("liked", likeService.isAlreadyLike(user.getId(), id));
 
         if(user != null){
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("userName", user.getNickname());
         }
         // 게시글 조회수 증가
         postsService.increaseViewCount(id);
@@ -130,7 +132,7 @@ public class IndexController {
         model.addAttribute("categoryName", dto.getCategoryName());
 
         if(user != null){
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("userName", user.getNickname());
         }
         return "posts-update";
     }
@@ -142,7 +144,7 @@ public class IndexController {
         model.addAttribute("categoryList", categoryService.findAll());
         model.addAttribute("categoryName", categoryRepository.findById(id).get().getName());
         if(user != null){
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("userName", user.getNickname());
         }
         return "posts-by-category";
     }
@@ -154,7 +156,7 @@ public class IndexController {
         model.addAttribute("postList", postsService.findByUser(userId));
         model.addAttribute("categoryList", categoryService.findAll());
         if(user != null){
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("userName", user.getNickname());
         }
         return "user-written-posts";
     }
@@ -166,7 +168,7 @@ public class IndexController {
         model.addAttribute("postList", likeService.findByUser(userId));
         model.addAttribute("categoryList", categoryService.findAll());
         if(user != null){
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("userName", user.getNickname());
         }
         return "user-liked-posts";
     }
@@ -182,7 +184,7 @@ public class IndexController {
         model.addAttribute("postList", postList);
         model.addAttribute("categoryList", categoryService.findAll());
         if(user != null){
-            model.addAttribute("userName", user.getName());
+            model.addAttribute("userName", user.getNickname());
         }
         return "user-comment-posts";
     }

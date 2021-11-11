@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class PostsSaveRequestDto{
-    private String user_name;
+    private String userNickname;
     private User user;
     private Integer category_id;
     private Category category;
@@ -23,15 +23,8 @@ public class PostsSaveRequestDto{
     private List<PostLike> postLikes;
 
 
-    @Builder
-    public PostsSaveRequestDto(Integer category_id, String title, String content){
-        this.category_id = category_id;
-        this.title = title;
-        this.content = content;
-    }
-
-    public void setUser(String user_name){
-        this.user_name = user_name;
+    public void setUser(String userNickname){
+        this.userNickname = userNickname;
     }
     public void setCategory(Category category){
         this.category = category;

@@ -3,7 +3,6 @@ package com.jsh.communityBoard.domain.like;
 import com.jsh.communityBoard.domain.posts.Post;
 import com.jsh.communityBoard.domain.user.User;
 import com.jsh.communityBoard.web.dto.PostLikeDto;
-import io.swagger.v3.oas.annotations.Parameters;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

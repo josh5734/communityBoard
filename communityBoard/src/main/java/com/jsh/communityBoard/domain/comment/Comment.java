@@ -4,7 +4,6 @@ package com.jsh.communityBoard.domain.comment;
 import com.jsh.communityBoard.domain.BaseTimeEntity;
 import com.jsh.communityBoard.domain.posts.Post;
 import com.jsh.communityBoard.domain.user.User;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
