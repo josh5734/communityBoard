@@ -33,4 +33,6 @@ public class CommentController {
         commentService.deletedUpdate(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
+
+    // 댓글은 수정할 수 없음.
 }

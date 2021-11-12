@@ -15,7 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.*;
 
-@Getter @NoArgsConstructor @Entity @Setter
+@Entity
+@NoArgsConstructor
+@Getter @Setter
 public class User extends BaseTimeEntity implements UserDetails {
 
     @Id
@@ -49,24 +51,17 @@ public class User extends BaseTimeEntity implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Comment> commentList = new ArrayList<>();
 
-//
     @Builder
-    public User(String nickname, String email, String picture, Role role){
+    public User(String username, String nickname, String password,
+                String email, String auth, String picture, Role role){
+        this.username = username;
         this.nickname = nickname;
+        this.password = password;
         this.email = email;
+        this.auth = "USER";
         this.picture = picture;
         this.role = role;
     }
-
-    public User(UserSaveRequestDto dto){
-        this.username = dto.getUsername();
-        this.nickname = dto.getNickname();
-        this.password = dto.getPassword();
-        this.email = dto.getEmail();
-        this.auth = "USER";
-        this.role = Role.USER;
-    }
-
 
     public User update(String nickname, String picture){
         this.nickname = nickname;

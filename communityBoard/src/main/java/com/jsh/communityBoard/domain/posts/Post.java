@@ -44,15 +44,27 @@ public class Post extends BaseTimeEntity {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Comment> commentList = new ArrayList<>(); // 댓글 리스트
 
+
+    // 연관관계 메서드
+    public void setUser(User user){
+        this.user = user;
+        user.getPostsList().add(this);
+    }
+
+    // 연관관계 메서드
+    public void setCategory(Category category){
+        this.category = category;
+        category.getPostsList().add(this);
+    }
+
     public Post createPost(User user, Category category, String title, String content){
+        setUser(user);
+        setCategory(category);
         this.user = user;
         this.category = category;
         this.title = title;
         this.content = content;
         this.viewCount = 0;
-//        this.postLikes = new ArrayList<>();
-        this.user.getPostsList().add(this);
-        this.category.getPostsList().add(this);
         return this;
     }
 

@@ -23,10 +23,9 @@ public class UserController {
 
     @PostMapping("/user")
     public String signup(UserSaveRequestDto dto){
-//        log.info("아이디 : {}, 비밀번호 : {}, 이메일 : {}", dto.getLoginId(), dto.getPassword(), dto.getEmail());
         System.out.println("dto.getUsername() = " + dto.getUsername());
         userService.save(dto);
-        return "redirect:/login";
+        return "redirect:/";
     }
 
     @GetMapping(value = "/logout")

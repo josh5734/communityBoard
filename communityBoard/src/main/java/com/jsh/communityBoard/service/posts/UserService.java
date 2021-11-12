@@ -1,6 +1,7 @@
 package com.jsh.communityBoard.service.posts;
 
 import com.jsh.communityBoard.config.auth.dto.SessionUser;
+import com.jsh.communityBoard.domain.user.Role;
 import com.jsh.communityBoard.domain.user.User;
 import com.jsh.communityBoard.domain.user.UserRepository;
 import com.jsh.communityBoard.web.dto.UserSaveRequestDto;
@@ -45,6 +46,12 @@ public class UserService implements UserDetailsService {
     public Long save(UserSaveRequestDto dto){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         dto.setPassword(encoder.encode(dto.getPassword()));
-        return userRepository.save(new User(dto)).getId();
+        User user = User.builder()
+                .username(dto.getUsername())
+                .nickname(dto.getNickname())
+                .password(dto.getPassword())
+                .email(dto.getEmail()).build();
+
+        return userRepository.save(user).getId();
     }
 }

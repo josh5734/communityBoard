@@ -53,18 +53,12 @@ public class Comment extends BaseTimeEntity {
     }
 
     // 댓글 수정
-    public void update(String content){
-        this.content = content;
-    }
-
     public void setUser(User user){
         this.user = user;
     }
-
     public void setPost(Post post){
         this.post = post;
     }
-
     public void setDeleted(){
         this.isDeleted = true;
     }
