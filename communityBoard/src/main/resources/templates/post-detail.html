@@ -43,7 +43,7 @@
                         <span>게시판 분류</span>
                     </li>
                     <li th:each="category : ${categoryList}" class = "sidebar-dropdown">
-                        <a th:href = "@{|/api/v1/posts/category/${category.id}|}">
+                        <a th:href = "@{/api/v1/posts/category/{id}(id = ${category.id})}">
                             <span th:text="${category.name}"></span>
                         </a>
                     </li>
@@ -114,8 +114,8 @@
 
 
             <div class="clearBothOnly"></div>
-            <div class="pagination">
-                <a id = "goBackListButton" class = "list">글 목록</a>
+            <div id = "goBackListButton" class="pagination">
+                <a class= "list" th:href = "@{/api/v1/posts/category/{id}(id = ${categoryId})}">글 목록</a>
             </div>
         </div>
     </div>
@@ -294,6 +294,7 @@
         replyInputBox.value = null;
         replyInputBox.placeholder = "댓글을 입력하세요.";
     }
+
     /*]]>*/
 </script>
 

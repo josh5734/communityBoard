@@ -486,3 +486,10 @@ footer .copyright-wrap span{
         display: none;
     }
 }
+
+
+.container-footer{
+    display: flex;
+    justify-content: space-between;
+}
+

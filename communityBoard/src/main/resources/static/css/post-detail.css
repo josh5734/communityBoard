@@ -228,6 +228,7 @@ img {
 }
 
 #container > div.articles > form.write ul.option li.attach {
+    margin-top: 10px;
     float: left;
     background-image: url(https://everytime.kr/images/new/container.articles.write.attach.png);
 }
@@ -241,6 +242,7 @@ img {
 }
 
 #container > div.articles > form.write ul.option li.submit {
+    margin-top: 10px;
     float: right;
     background-color: #c62917;
     background-image: url(https://everytime.kr/images/new/container.articles.write.submit.png);
@@ -251,8 +253,8 @@ img {
 }
 #container > div.articles > div.pagination > a {
     display: block;
-    margin-top: 5px;
-    margin-left: 5px;
+    /*margin-top: 5px;*/
+    /*margin-left: 5px;*/
     padding: 0 10px 0 25px;
     height: 35px;
     line-height: 35px;
@@ -377,8 +379,8 @@ img {
 
 #container > div.articles > div.pagination > a {
     display: block;
-    margin-top: 5px;
-    margin-left: 5px;
+    /*margin-top: 5px;*/
+    /*margin-left: 5px;*/
     padding: 0 10px 0 25px;
     height: 35px;
     line-height: 35px;
@@ -391,4 +393,9 @@ img {
     background-position: 10px center;
     background-size: 10px 10px;
     cursor: pointer;
+}
+
+#goBackListButton{
+    margin-left: 0px ;
+    margin-top: 15px;
 }

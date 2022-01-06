@@ -101,6 +101,7 @@ public class IndexController {
         model.addAttribute("categoryList", categoryService.findAll());
         PostsResponseDto dto = postsService.findById(id);
         model.addAttribute("categoryName", dto.getCategoryName());
+        model.addAttribute("categoryId", dto.getCategoryId());
         model.addAttribute("post", dto);
 
         // 게시물의 댓글을 그룹순, 순서순으로 정렬

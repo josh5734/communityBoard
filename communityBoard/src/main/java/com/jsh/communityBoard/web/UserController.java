@@ -23,8 +23,8 @@ public class UserController {
 
     @PostMapping("/user")
     public String signup(UserSaveRequestDto dto){
-        System.out.println("dto.getUsername() = " + dto.getUsername());
         userService.save(dto);
+
         return "redirect:/";
     }
 

@@ -46,7 +46,7 @@
                         <span>게시판 분류</span>
                     </li>
                     <li th:each="category : ${categoryList}" class = "sidebar-dropdown">
-                        <a th:href = "@{|/api/v1/posts/category/${category.id}|}">
+                        <a th:href = "@{/api/v1/posts/category/{id}(id = ${category.id})}">
                             <span th:text="${category.name}"></span>
                         </a>
                     </li>

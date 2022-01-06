@@ -24,9 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 //                http.
                 .authorizeRequests() // URL별 권한 관리
-                    .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**", "**").permitAll()
+                    .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**").permitAll()
                     .antMatchers("/login", "/signup").permitAll()
-                    .antMatchers("/api/v1/**").permitAll()
+                    .antMatchers("/api/v1/**").authenticated()
                     .anyRequest().permitAll() // Give the permission accessing any other URL to "USER"
                 .and()
                 /*

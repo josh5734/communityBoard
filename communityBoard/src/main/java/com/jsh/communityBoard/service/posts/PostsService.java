@@ -23,6 +23,9 @@ public class PostsService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
 
+
+
+
     // 등록
     @Transactional
     public Long save(PostsSaveRequestDto requestDto){

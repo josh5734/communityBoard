@@ -51,6 +51,7 @@
             color: #e5503c;
         }
 
+
         .visible{
             display: block;
         }
@@ -90,7 +91,7 @@
 
                 <div class="mb-3">
                     <label for="password">비밀번호 확인</label>
-                    <input type="text" class="form-control" id="password_auth" placeholder="비밀번호를 다시 입력해주세요." th:onchange="|javascript:checkPasswd()|" required>
+                    <input type="text" class="form-control" id="password_auth" placeholder="비밀번호를 다시 입력해주세요."  required>
                     <span class = "passwd_check_phrase">* 비밀번호가 일치하지 않습니다.</span>
                     <div class="invalid-feedback">
                         비밀번호를 다시 입력해주세요.
@@ -104,7 +105,8 @@
                         이메일을 입력해주세요.
                     </div>
                 </div>
-            <input class="btn btn-primary btn-lg btn-block" type="submit" value="가입하기" th:onclick="|javascript:save()|"/>
+
+                <input class="btn btn-primary btn-lg btn-block" type="submit" value="가입하기" th:onclick="|javascript:save()|"/>
             </form>
         </div>
     </div>
@@ -128,12 +130,32 @@
         })
             .then((response) => {
                 alert('회원가입이 완료되었습니다.');
-                // window.location.href = '/';
+                window.location.href = '/login';
             })
             .catch((e=>{
                 alert(e);
             }))
     }
+    const password = document.getElementById("password");
+    const passwordAuth = document.getElementById("password_auth");
+    password.addEventListener("change", checkSamePassword);
+    passwordAuth.addEventListener("change", checkSamePassword);
+
+    const passwordAlarm = document.getElementsByClassName("passwd_check_phrase")[0];
+
+    function checkSamePassword(){
+
+        const password1 = password.value;
+        const password2 = passwordAuth.value;
+        console.log(password1, password2)
+
+        if(password1 === password2){
+            passwordAlarm.classList.remove("visible");
+        }else{
+            passwordAlarm.classList.add("visible");
+        }
+    }
+
 
     // window.addEventListener('load', () => {
     //     const forms = document.getElementsByClassName('validation-form');

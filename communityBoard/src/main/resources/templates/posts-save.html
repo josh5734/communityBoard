@@ -42,7 +42,7 @@
                         <span>게시판 분류</span>
                     </li>
                     <li th:each="category : ${categoryList}" class = "sidebar-dropdown">
-                        <a href = "/api/v1/posts/category/${category.id}">
+                        <a th:href = "@{/api/v1/posts/category/{id}(id = ${category.id})}">
                             <span th:text="${category.name}"></span>
                         </a>
                     </li>
@@ -54,16 +54,23 @@
 
     <!-- 작성 폼 -->
     <div id="container">
-        <select class="select__box" th:name="category" id = "category-box">
-            <option value = "카테고리"> 선택</option>
-            <option th:each="val : ${categoryList}" th:value="${val?.id}" th:utext="${val?.name}"></option>
-        </select>
+        <div class="wrap title post-save-title">
+            글쓰기
+            <div class="select__box">
+                <label for="select">카테고리 선택</label>
+                <select th:name="category" id = "select">
+                    <option th:each="val : ${categoryList}" th:value="${val?.id}" th:utext="${val?.name}"></option>
+                </select>
+            </div>
+        </div>
+
         <div class = "wrap articles">
             <form class="write">
                 <p ><input autocomplete="off" id = "title" placeholder="글 제목" class="title"></p>
                 <p>
                     <textarea name="text" id = "content" placeholder="내용을 입력하세요." class="smallplaceholder"></textarea>
                 </p>
+                <br>
                 <ul class="option">
                     <li class = "attach"></li>
                     <li class = "submit" th:onclick="|javascript:save()|"></li>
@@ -81,7 +88,7 @@
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     function save(){
-        var categoryBox = document.getElementById('category-box')
+        var categoryBox = document.getElementById('select')
         let data = {
             category_id : categoryBox.options[categoryBox.selectedIndex].value,
             title : document.getElementById('title').value,

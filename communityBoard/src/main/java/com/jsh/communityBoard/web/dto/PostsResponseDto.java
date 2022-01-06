@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class PostsResponseDto {
     private Long id;
     private UserResponseDto user;
+    private Integer categoryId;
     private String categoryName;
     private String title;
     private String content;
@@ -23,6 +24,7 @@ public class PostsResponseDto {
         this.id = entity.getId();
         this.user = new UserResponseDto(entity.getUser());
         this.categoryName = entity.getCategory().getName();
+        this.categoryId = entity.getCategory().getId();
         this.title = entity.getTitle();
         this.content= entity.getContent();
         this.viewCount = entity.getViewCount();

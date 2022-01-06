@@ -39,6 +39,7 @@ public class UserService implements UserDetailsService {
     public User loadUserByUsername(String username) throws UsernameNotFoundException{
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException((username)));
+
         httpSession.setAttribute("user", new SessionUser(user));
         return user;
     }
@@ -51,7 +52,6 @@ public class UserService implements UserDetailsService {
                 .nickname(dto.getNickname())
                 .password(dto.getPassword())
                 .email(dto.getEmail()).build();
-
         return userRepository.save(user).getId();
     }
 }
